@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head><!DOCTYPE html>
+    <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:include = "~{fragments/head}"></th:block>
+    </head>
+<body>
+<div class="container-fluid">
+    <header>
+        <th:block th:include = "~{fragments/navbar}"></th:block>
+    </header>
+    <main class="mt-3">
+        <form th:action="@{/users/login}" method="post">
+            <div class="form-group">
+                <label for="inputUsername">Username</label>
+                <input type="text" name="username" class="form-control" id="inputUsername" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Enter Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </main>
+</div>
+</body>
+</html>

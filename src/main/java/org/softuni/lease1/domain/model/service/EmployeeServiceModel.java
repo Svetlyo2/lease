@@ -1,19 +1,17 @@
-package org.softuni.lease1.domain.entity;
+package org.softuni.lease1.domain.model.service;
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = "employees")
-public class Employee extends BaseEntity{
+import org.softuni.lease1.domain.entity.User;
+
+public class EmployeeServiceModel extends BaseServiceModel{
     private String fullName;
     private String department;
     private String position;
-    private User user;
+    private UserServiceModel user;
 
-    public Employee() {
+    public EmployeeServiceModel() {
     }
 
-    @Column(name = "full_name", columnDefinition = "TEXT", nullable = false)
     public String getFullName() {
         return fullName;
     }
@@ -22,7 +20,6 @@ public class Employee extends BaseEntity{
         this.fullName = fullName;
     }
 
-    @Column(name = "department", columnDefinition = "TEXT", nullable = false)
     public String getDepartment() {
         return department;
     }
@@ -31,7 +28,6 @@ public class Employee extends BaseEntity{
         this.department = department;
     }
 
-    @Column(name = "position", columnDefinition = "TEXT", nullable = false)
     public String getPosition() {
         return position;
     }
@@ -40,13 +36,19 @@ public class Employee extends BaseEntity{
         this.position = position;
     }
 
-    @OneToOne
-    @JoinColumn(name = "users_id")
-    public User getUser() {
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
+
+        public UserServiceModel getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserServiceModel user) {
         this.user = user;
     }
 }

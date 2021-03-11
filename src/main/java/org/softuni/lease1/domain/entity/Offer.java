@@ -1,6 +1,7 @@
 package org.softuni.lease1.domain.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -10,8 +11,10 @@ public class Offer extends BaseEntity {
     private Integer deposit;
     private Integer term;
     private Integer residualValue;
-    private OfferStatus status;
+    private String status;
     private LocalDateTime requestDate;
+    private BigDecimal interest;
+    private BigDecimal fee;
     private Car car;
 
     public Offer() {
@@ -44,13 +47,12 @@ public class Offer extends BaseEntity {
         this.residualValue = residualValue;
     }
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "status", columnDefinition = "TEXT", nullable = false)
-    public OfferStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(OfferStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -63,7 +65,23 @@ public class Offer extends BaseEntity {
         this.requestDate = requestDate;
     }
 
-//    @ManyToOne(fetch = FetchType.LAZY, optional=false)
+    public BigDecimal getInterest() {
+        return interest;
+    }
+
+    public void setInterest(BigDecimal interest) {
+        this.interest = interest;
+    }
+
+    public BigDecimal getFee() {
+        return fee;
+    }
+
+    public void setFee(BigDecimal fee) {
+        this.fee = fee;
+    }
+
+    //    @ManyToOne(fetch = FetchType.LAZY, optional=false)
 //    @JoinColumn(name="car_id", nullable=false)
 
     @ManyToOne(targetEntity = Car.class)

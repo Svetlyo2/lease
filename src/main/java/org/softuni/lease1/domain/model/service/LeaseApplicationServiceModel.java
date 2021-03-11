@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public class LeaseApplicationServiceModel {
     private String appStatus;
-    private Employee employee;
+    private EmployeeServiceModel employee;
     private LocalDateTime requestDate;
     private LocalDateTime decisionDate;
     private OfferServiceModel offer;
@@ -23,11 +23,11 @@ public class LeaseApplicationServiceModel {
         this.appStatus = appStatus;
     }
 
-    public Employee getEmployee() {
+    public EmployeeServiceModel getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
+    public void setEmployee(EmployeeServiceModel employee) {
         this.employee = employee;
     }
 

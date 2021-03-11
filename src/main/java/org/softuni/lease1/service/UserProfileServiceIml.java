@@ -1,7 +1,6 @@
 package org.softuni.lease1.service;
 
 import org.modelmapper.ModelMapper;
-import org.softuni.lease1.domain.entity.Type;
 import org.softuni.lease1.domain.entity.UserProfile;
 import org.softuni.lease1.domain.model.service.ProfileServiceModel;
 import org.softuni.lease1.domain.model.service.UserServiceModel;

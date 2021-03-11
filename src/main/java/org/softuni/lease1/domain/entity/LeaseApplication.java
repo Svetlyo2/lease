@@ -54,7 +54,7 @@ public class LeaseApplication extends BaseEntity{
         this.decisionDate = decisionDate;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "offer_id")
     public Offer getOffer() {
         return offer;

@@ -31,7 +31,7 @@ public class LeaseApplicationServiceImpl implements LeaseApplicationService {
     leaseApplicationAddModel.setAppStatus("RECEIVED");
     leaseApplicationAddModel.setRequestDate(LocalDateTime.now());
     leaseApplicationAddModel.setOffer(this.offerService.findOfferById(offerId));
-    leaseApplicationAddModel.setUser(this.modelMapper.map(this.userProfileService.findProfile(username), UserProfile.class));
+    leaseApplicationAddModel.setUser(this.userProfileService.findProfile(username));
     this.leaseApplicationRepository.saveAndFlush(this.modelMapper.map(leaseApplicationAddModel, LeaseApplication.class));
     }
 

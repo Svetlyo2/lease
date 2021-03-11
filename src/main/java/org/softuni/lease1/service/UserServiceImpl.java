@@ -71,18 +71,29 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public void setUserRole(String id, String role) {
+        User user = this.userRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Wrong id"));
+        UserServiceModel userServiceModel = this.modelMapper.map(user, UserServiceModel.class);
+        userServiceModel.getAuthorities().clear();
+        switch (role) {
+            case "user":
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
+                break;
+            case "moderator":
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_MODERATOR"));
+                break;
+            case "admin":
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_MODERATOR"));
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_ADMIN"));
+                break;
+        }
+        this.userRepository.saveAndFlush(this.modelMapper.map(userServiceModel, User.class));
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         return this.userRepository.findByUsername(s).orElseThrow(()->new UsernameNotFoundException("Username not found"));
     }
-
-//    private void giveRolesToUser(User user){
-//        if (this.userRepository.count() == 0){
-//            user.getAuthorities().add(this.roleRepository.findByAuthority("ROLE_ADMIN"));
-//            user.getAuthorities().add(this.roleRepository.findByAuthority("ROLE_MODERATOR"));
-//            user.getAuthorities().add(this.roleRepository.findByAuthority("ROLE_USER"));
-//
-//        } else {
-//            user.getAuthorities().add(this.roleRepository.findByAuthority("ROLE_USER"));
-//        }
-//    }
 }

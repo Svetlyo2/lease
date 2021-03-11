@@ -3,6 +3,7 @@ package org.softuni.lease1.web.controllers;
 import org.modelmapper.ModelMapper;
 import org.softuni.lease1.domain.model.binding.UserEditBindingModel;
 import org.softuni.lease1.domain.model.binding.UserRegisterBindingModel;
+import org.softuni.lease1.domain.model.service.RoleServiceModel;
 import org.softuni.lease1.domain.model.service.UserServiceModel;
 import org.softuni.lease1.domain.model.view.UserListViewModel;
 import org.softuni.lease1.domain.model.view.UserViewModel;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -41,7 +43,7 @@ public class UserController extends BaseController{
             return super.view("register");
         }
         this.userService.registerUser(this.modelMapper.map(userRegisterBindingModel, UserServiceModel.class));
-        return super.redirect("/login");
+        return super.redirect("/users/login");
     }
 
     @GetMapping("/login")
@@ -53,14 +55,14 @@ public class UserController extends BaseController{
     @GetMapping("/edit")
     @PreAuthorize("isAuthenticated()")
     public ModelAndView edit(Principal principal, ModelAndView modelAndView){
-        modelAndView.addObject("model", this.modelMapper.map(this.userService.findByUsername(principal.getName()), UserViewModel.class));
+        modelAndView.addObject("model",
+                this.modelMapper.map(this.userService.findByUsername(principal.getName()), UserViewModel.class));
         return super.view("edit-user", modelAndView);
     }
 
     @PostMapping("/edit")
     @PreAuthorize("isAuthenticated()")
     public ModelAndView editConfirm(@ModelAttribute UserEditBindingModel userEditBindingModel){
-        System.out.println();
         if (!userEditBindingModel.getPassword().equals(userEditBindingModel.getConfirmPassword())){
             return super.view("edit-user");
         }
@@ -75,12 +77,32 @@ public class UserController extends BaseController{
                 .stream()
                 .map(u->{
                     UserListViewModel user = this.modelMapper.map(u, UserListViewModel.class);
-                    user.setAuthorities(u.getAuthorities().stream().map(a->a.getAuthority()).collect(Collectors.toSet()));
+                    Set<String> authorities = u.getAuthorities().stream().map(RoleServiceModel::getAuthority).collect(Collectors.toSet());
+                    user.setAuthorities(authorities);
+                    return user;
                 })
                 .collect(Collectors.toList());
         modelAndView.addObject("users", users);
         return super.view("all-users", modelAndView);
     }
 
+    @PostMapping("/set-user/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ModelAndView setUser(@PathVariable String id){
+        this.userService.setUserRole(id, "user");
+        return super.redirect("/users/all");
+    }
+    @PostMapping("/set-moderator/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ModelAndView setModerator(@PathVariable String id){
+        this.userService.setUserRole(id, "moderator");
+        return super.redirect("/users/all");
+    }
 
+    @PostMapping("/set-admin/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ModelAndView setAdmin(@PathVariable String id) {
+        this.userService.setUserRole(id, "admin");
+        return super.redirect("/users/all");
+    }
 }

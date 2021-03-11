@@ -53,7 +53,7 @@ public class UserProfileController extends BaseController {
         ProfileServiceModel profileServiceModel = this.modelMapper.map(bindingModel, ProfileServiceModel.class);
         String name = principal.getName();
         this.userProfileService.add(profileServiceModel, name);
-        return super.redirect("/home");
+        return super.redirect("/car/my-cars");
     }
     @GetMapping("/show")
     public ModelAndView show( ModelAndView modelAndView, Principal principal) {

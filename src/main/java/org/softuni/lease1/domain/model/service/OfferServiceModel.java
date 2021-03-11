@@ -3,6 +3,7 @@ package org.softuni.lease1.domain.model.service;
 import org.softuni.lease1.domain.entity.Car;
 import org.softuni.lease1.domain.entity.OfferStatus;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class OfferServiceModel {
@@ -12,6 +13,8 @@ public class OfferServiceModel {
     private Integer residualValue;
     private String status;
     private LocalDateTime requestDate;
+    private BigDecimal interest;
+    private BigDecimal fee;
     private CarServiceModel car;
 
     public OfferServiceModel() {
@@ -63,6 +66,22 @@ public class OfferServiceModel {
 
     public void setRequestDate(LocalDateTime requestDate) {
         this.requestDate = requestDate;
+    }
+
+    public BigDecimal getInterest() {
+        return interest;
+    }
+
+    public void setInterest(BigDecimal interest) {
+        this.interest = interest;
+    }
+
+    public BigDecimal getFee() {
+        return fee;
+    }
+
+    public void setFee(BigDecimal fee) {
+        this.fee = fee;
     }
 
     public CarServiceModel getCar() {

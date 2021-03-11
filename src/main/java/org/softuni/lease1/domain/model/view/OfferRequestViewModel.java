@@ -3,17 +3,18 @@ package org.softuni.lease1.domain.model.view;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class OfferListViewModel {
+public class OfferRequestViewModel {
     private String id;
     private Integer deposit;
     private Integer term;
     private Integer residualValue;
     private String  status;
     private LocalDateTime requestDate;
-    private BigDecimal interest;
-    private BigDecimal fee;
+    private String make;
+    private BigDecimal price;
+    private String carId;
 
-    public OfferListViewModel() {
+    public OfferRequestViewModel() {
     }
 
     public String getId() {
@@ -64,19 +65,27 @@ public class OfferListViewModel {
         this.requestDate = requestDate;
     }
 
-    public BigDecimal getInterest() {
-        return interest;
+    public String getMake() {
+        return make;
     }
 
-    public void setInterest(BigDecimal interest) {
-        this.interest = interest;
+    public void setMake(String make) {
+        this.make = make;
     }
 
-    public BigDecimal getFee() {
-        return fee;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setFee(BigDecimal fee) {
-        this.fee = fee;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getCarId() {
+        return carId;
+    }
+
+    public void setCarId(String carId) {
+        this.carId = carId;
     }
 }

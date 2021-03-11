@@ -25,11 +25,10 @@
                                 Admin
                             </a>
                             <div class="dropdown-menu" aria-labelledby="adminDropdown">
-                                <a class="dropdown-item" th:href="@{/profile/show}">Roles</a>
-                                <a class="dropdown-item" th:href="@{/profile/add}">Users</a>
+                                <a class="dropdown-item" th:href="@{/users/all}">Users</a>
+                                <a class="dropdown-item" th:href="@{/employees/all}">Employees</a>
                             </div>
                         </li>
-
                     </th:block>
                     <th:block sec:authorize="hasRole('ROLE_MODERATOR')">
                         <li class="nav-item dropdown text-light">
@@ -38,8 +37,8 @@
                                 Moderator
                             </a>
                             <div class="dropdown-menu" aria-labelledby="moderatorDropdown">
-                                <a class="dropdown-item" th:href="@{/profile/show}">Offer requests</a>
-                                <a class="dropdown-item" th:href="@{/profile/add}">New applications</a>
+                                <a class="dropdown-item" th:href="@{/offers/requested}">Offer inquiries</a>
+                                <a class="dropdown-item" th:href="@{/applications/new}">New applications</a>
                             </div>
                         </li>
                     </th:block>

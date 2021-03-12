@@ -62,7 +62,6 @@ public class CarServiceImpl implements CarService{
     public void setSeller(SellerServiceModel seller, String carId) {
         CarServiceModel car = findCarById(carId);
         car.setSeller(seller);
-        System.out.println();
         this.carRepository.saveAndFlush(this.modelMapper.map(car, Car.class));
     }
 

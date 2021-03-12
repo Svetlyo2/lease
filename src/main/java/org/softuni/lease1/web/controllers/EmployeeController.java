@@ -32,6 +32,7 @@ public class EmployeeController extends BaseController {
     }
 
     @GetMapping("/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView add(@ModelAttribute(name = "bindingModel") EmployeeAddBindingModel bindingModel,
                             ModelAndView modelAndView) {
         modelAndView.addObject("bindingModel", bindingModel);
@@ -44,14 +45,15 @@ public class EmployeeController extends BaseController {
             @Valid @ModelAttribute(name = "bindingModel") EmployeeAddBindingModel bindingModel,
             BindingResult bindingResult,
             ModelAndView modelAndView) {
+        System.out.println();
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("bindingModel", bindingModel);
             return super.view("add-employee", modelAndView);
         }
         EmployeeServiceModel employeeServiceModel = this.modelMapper.map(bindingModel, EmployeeServiceModel.class);
         String username = bindingModel.getUsername();
-        this.employeeService.add(employeeServiceModel, username);
-        return super.view("all-employees");
+//        this.employeeService.add(employeeServiceModel, username);
+        return super.redirect("/employees/all");
     }
 
     @GetMapping("/all")

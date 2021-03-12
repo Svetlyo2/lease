@@ -5,7 +5,7 @@ import org.softuni.lease1.domain.entity.Employee;
 
 import java.time.LocalDateTime;
 
-public class LeaseApplicationServiceModel {
+public class LeaseApplicationServiceModel extends BaseServiceModel {
     private String appStatus;
     private EmployeeServiceModel employee;
     private LocalDateTime requestDate;

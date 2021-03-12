@@ -1,6 +1,7 @@
 package org.softuni.lease1.service;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.lease1.domain.entity.AppStatus;
 import org.softuni.lease1.domain.entity.LeaseApplication;
 import org.softuni.lease1.domain.entity.UserProfile;
 import org.softuni.lease1.domain.model.binding.LeaseApplicationAddModel;
@@ -9,6 +10,8 @@ import org.softuni.lease1.repository.LeaseApplicationRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LeaseApplicationServiceImpl implements LeaseApplicationService {
@@ -40,5 +43,15 @@ public class LeaseApplicationServiceImpl implements LeaseApplicationService {
         String userId = this.userProfileService.findProfile(username).getId();
         LeaseApplication leaseApplication = this.leaseApplicationRepository.findByUser_Id(userId).orElse(null);
         return this.modelMapper.map(leaseApplication, LeaseApplicationServiceModel.class);
+    }
+
+    @Override
+    public List<LeaseApplicationServiceModel> findAllNewApplications() {
+        List<LeaseApplicationServiceModel> applications = this.leaseApplicationRepository
+                .findAllByAppStatus(AppStatus.RECEIVED)
+                .stream()
+                .map(a->this.modelMapper.map(a, LeaseApplicationServiceModel.class))
+                .collect(Collectors.toList());
+        return applications;
     }
 }

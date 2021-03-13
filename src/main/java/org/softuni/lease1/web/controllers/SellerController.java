@@ -48,7 +48,6 @@ public class SellerController extends BaseController{
             modelAndView.addObject("bindingModel", bindingModel);
             return super.view("add-seller", modelAndView);
         }
-//        System.out.println();
         this.sellerService.add(this.modelMapper.map(bindingModel, SellerAddBindingModel.class), id);
         this.leaseApplicationService.add(id, principal.getName());
         return super.view("home");

@@ -5,3 +5,12 @@
 #form-review{
     margin-left: 25%;
 }
+/** Pull left **/
+.pull-left-md {
+    float: left;
+}
+
+/** Pull right **/
+.pull-right-md {
+    float: right;
+}

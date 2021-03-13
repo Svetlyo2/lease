@@ -72,11 +72,11 @@ public class UserProfileController extends BaseController {
         return super.view("edit-profile", modelAndView);
     }
 
-    @PatchMapping("/edit")
+    @PostMapping("/edit")
     @PreAuthorize("isAuthenticated()")
     public ModelAndView editConfirm(@ModelAttribute ProfileEditBindingModel profileEditBindingModel,
                                     Principal principal) {
         this.userProfileService.editProfile(this.modelMapper.map(profileEditBindingModel, ProfileServiceModel.class), principal.getName());
-        return super.redirect("/profile");
+        return super.redirect("/profile/show");
     }
 }

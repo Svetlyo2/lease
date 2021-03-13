@@ -1,9 +1,6 @@
 package org.softuni.lease1.domain.model.service;
 
-
-import org.softuni.lease1.domain.entity.User;
-
-public class EmployeeServiceModel extends BaseServiceModel{
+public class EmployeeServiceModel extends BaseServiceModel {
     private String fullName;
     private String department;
     private String position;
@@ -36,15 +33,7 @@ public class EmployeeServiceModel extends BaseServiceModel{
         this.position = position;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
-
-        public UserServiceModel getUser() {
+    public UserServiceModel getUser() {
         return user;
     }
 

@@ -6,8 +6,7 @@ import org.softuni.lease1.domain.entity.OfferStatus;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class OfferServiceModel {
-    private String id;
+public class OfferServiceModel extends BaseServiceModel {
     private Integer deposit;
     private Integer term;
     private Integer residualValue;
@@ -18,14 +17,6 @@ public class OfferServiceModel {
     private CarServiceModel car;
 
     public OfferServiceModel() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public Integer getDeposit() {

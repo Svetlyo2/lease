@@ -1,5 +1,6 @@
 package org.softuni.lease1.domain.model.binding;
 import org.softuni.lease1.domain.entity.Offer;
+import org.softuni.lease1.domain.entity.User;
 import org.softuni.lease1.domain.entity.UserProfile;
 import org.softuni.lease1.domain.model.service.OfferServiceModel;
 import org.softuni.lease1.domain.model.service.ProfileServiceModel;
@@ -10,7 +11,7 @@ public class LeaseApplicationAddModel {
     private String appStatus;
     private LocalDateTime requestDate;
     private OfferServiceModel offer;
-    private ProfileServiceModel user;
+    private User user;
 
     public LeaseApplicationAddModel() {
     }
@@ -39,11 +40,11 @@ public class LeaseApplicationAddModel {
         this.offer = offer;
     }
 
-    public ProfileServiceModel getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(ProfileServiceModel user) {
+    public void setUser(User user) {
         this.user = user;
     }
 }

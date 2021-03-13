@@ -43,9 +43,14 @@ public class UserProfileServiceIml implements UserProfileService{
 
     @Override
     public ProfileServiceModel editProfile(ProfileServiceModel profileServiceModel, String name) {
-
         UserProfile userProfile = this.userProfileRepository.findByUserUsernameContains(name)
                 .orElseThrow(()-> new UsernameNotFoundException("Username not found"));
+        userProfile.setType(profileServiceModel.getType());
+        userProfile.setFullName(profileServiceModel.getFullName());
+        userProfile.setUIC(profileServiceModel.getUIC());
+        userProfile.setCity(profileServiceModel.getCity());
+        userProfile.setAddress(profileServiceModel.getAddress());
+        userProfile.setMobile(profileServiceModel.getMobile());
         return this.modelMapper.map(this.userProfileRepository.saveAndFlush(userProfile), ProfileServiceModel.class);
     }
 }

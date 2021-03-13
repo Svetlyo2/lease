@@ -2,9 +2,11 @@ package org.softuni.lease1.service;
 
 import org.modelmapper.ModelMapper;
 import org.softuni.lease1.domain.entity.AppStatus;
+import org.softuni.lease1.domain.entity.Employee;
 import org.softuni.lease1.domain.entity.LeaseApplication;
-import org.softuni.lease1.domain.entity.UserProfile;
+import org.softuni.lease1.domain.entity.User;
 import org.softuni.lease1.domain.model.binding.LeaseApplicationAddModel;
+import org.softuni.lease1.domain.model.service.EmployeeServiceModel;
 import org.softuni.lease1.domain.model.service.LeaseApplicationServiceModel;
 import org.softuni.lease1.repository.LeaseApplicationRepository;
 import org.springframework.stereotype.Service;
@@ -16,14 +18,19 @@ import java.util.stream.Collectors;
 @Service
 public class LeaseApplicationServiceImpl implements LeaseApplicationService {
     private final LeaseApplicationRepository leaseApplicationRepository;
+    private final UserService userService;
     private final UserProfileService userProfileService;
     private final OfferService offerService;
+    private final EmployeeService employeeService;
     private final ModelMapper modelMapper;
 
-    public LeaseApplicationServiceImpl(LeaseApplicationRepository leaseApplicationRepository, UserProfileService userProfileService, OfferService offerService, ModelMapper modelMapper) {
+
+    public LeaseApplicationServiceImpl(LeaseApplicationRepository leaseApplicationRepository, UserService userService, UserProfileService userProfileService, OfferService offerService, EmployeeService employeeService, ModelMapper modelMapper) {
         this.leaseApplicationRepository = leaseApplicationRepository;
+        this.userService = userService;
         this.userProfileService = userProfileService;
         this.offerService = offerService;
+        this.employeeService = employeeService;
         this.modelMapper = modelMapper;
     }
 
@@ -34,15 +41,17 @@ public class LeaseApplicationServiceImpl implements LeaseApplicationService {
     leaseApplicationAddModel.setAppStatus("RECEIVED");
     leaseApplicationAddModel.setRequestDate(LocalDateTime.now());
     leaseApplicationAddModel.setOffer(this.offerService.findOfferById(offerId));
-    leaseApplicationAddModel.setUser(this.userProfileService.findProfile(username));
+    leaseApplicationAddModel.setUser(this.modelMapper.map(this.userService.findByUsername(username), User.class));
     this.leaseApplicationRepository.saveAndFlush(this.modelMapper.map(leaseApplicationAddModel, LeaseApplication.class));
     }
 
     @Override
-    public LeaseApplicationServiceModel findApplicationByUser(String username) {
-        String userId = this.userProfileService.findProfile(username).getId();
-        LeaseApplication leaseApplication = this.leaseApplicationRepository.findByUser_Id(userId).orElse(null);
-        return this.modelMapper.map(leaseApplication, LeaseApplicationServiceModel.class);
+    public List<LeaseApplicationServiceModel> findApplicationsByUser(String username) {
+        List<LeaseApplicationServiceModel> applications = this.leaseApplicationRepository.findAllByUser_Username(username)
+                .stream()
+                .map(a->this.modelMapper.map(a,LeaseApplicationServiceModel.class))
+                .collect(Collectors.toList());
+        return applications;
     }
 
     @Override
@@ -53,5 +62,24 @@ public class LeaseApplicationServiceImpl implements LeaseApplicationService {
                 .map(a->this.modelMapper.map(a, LeaseApplicationServiceModel.class))
                 .collect(Collectors.toList());
         return applications;
+    }
+
+    @Override
+    public LeaseApplicationServiceModel findApplicationById(String id) {
+        LeaseApplication app = this.leaseApplicationRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Lease application not found!"));
+        return this.modelMapper.map(app, LeaseApplicationServiceModel.class);
+    }
+
+    @Override
+    public LeaseApplicationServiceModel reviewApplication(String id, LeaseApplicationServiceModel model, String username) {
+        LeaseApplication leaseApplication = this.leaseApplicationRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Application not found!"));
+        EmployeeServiceModel employee = this.employeeService.findByUsername(username);
+        leaseApplication.setDecisionDate(LocalDateTime.now());
+        leaseApplication.setDescription(model.getDescription());
+        leaseApplication.setAppStatus(AppStatus.valueOf(model.getAppStatus()));
+        leaseApplication.setEmployee(this.modelMapper.map(employee, Employee.class));
+        return this.modelMapper.map(this.leaseApplicationRepository.saveAndFlush(leaseApplication), LeaseApplicationServiceModel.class);
     }
 }

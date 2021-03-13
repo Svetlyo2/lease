@@ -10,7 +10,9 @@ public class LeaseApplicationServiceModel extends BaseServiceModel {
     private EmployeeServiceModel employee;
     private LocalDateTime requestDate;
     private LocalDateTime decisionDate;
+    private String description;
     private OfferServiceModel offer;
+    private UserServiceModel user;
 
     public LeaseApplicationServiceModel() {
     }
@@ -47,11 +49,27 @@ public class LeaseApplicationServiceModel extends BaseServiceModel {
         this.decisionDate = decisionDate;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public OfferServiceModel getOffer() {
         return offer;
     }
 
     public void setOffer(OfferServiceModel offer) {
         this.offer = offer;
+    }
+
+    public UserServiceModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserServiceModel user) {
+        this.user = user;
     }
 }

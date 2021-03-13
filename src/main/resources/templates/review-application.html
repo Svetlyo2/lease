@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"></th:block>
+</header>
+<main>
+    <h2 class="text-center">Leasing application</h2>
+    <div class="container w-75">
+        <div class="row mb-1">
+            <div class="col-sm-6">
+                <div class="card" th:object="${profile}">
+                    <div class="card-body">
+                        <h5 class="card-header">Lessee</h5>
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text mb-0" th:text="|Name: *{fullName}|"></p>
+                            <p class="card-text mb-0" th:text="|Type: *{type}|"></p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text mb-0" th:text="|UIC: *{UIC}|"></p>
+                            <p class="card-text mb-0" th:text="|City: *{city}|"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body" th:object="${car}">
+                        <h5 class="card-header">Car</h5>
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text mb-0" th:text="|Make: *{make}|"></p>
+                            <p class="card-text mb-0" th:text="|Price: *{price}|"></p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text mb-0" th:text="|Model: *{carModel}|"></p>
+                            <p class="card-text mb-0" th:text="|Year: *{year}|"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="col-sm-6">
+                <div class="card" th:object="${seller}">
+                    <div class="card-body">
+                        <h5 class="card-header">Seller</h5>
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text mb-0" th:text="|Name: *{fullName}|"></p>
+                            <p class="card-text mb-0" th:text="|Type: *{type}|"></p>
+                        </div>
+                        <div class="d-flex justify-content-between mt-1">
+                            <p class="card-text mb-0" th:text="|UIC: *{UIC}|"></p>
+                            <p class="card-text mb-0" th:text="|City: *{city}|"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body" th:object="${offer}">
+                        <h5 class="card-header">Offer conditions</h5>
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text mb-0" th:text="|Deposit % *{deposit}|"></p>
+                            <p class="card-text mb-0" th:text="|Residual value % *{residualValue}|"></p>
+                            <p class="card-text mb-0" th:text="|Term: *{term} m|"></p>
+                        </div>
+                        <div class="d-flex justify-content-between mt-1">
+                            <p class="card-text mb-0" th:text="|Interest % *{interest}|"></p>
+                            <a class="btn btn-sm btn-light btn-outline-dark" th:href="@{/offers/edit/{id}(id=*{id})}">Change</a>
+                            <p class="card-text mb-0" th:text="|Fee % *{fee}|"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form th:object="${app}" th:action="@{/applications/edit/{id}(id=${id})}" th:method="post">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label for="inputDescription" class="card-header font-weight-bold ml-3">Comments on the
+                        decision</label>
+                    <div>
+                        <textarea th:field="*{description}" cols="20" rows="6" class="form-control form-control-sm"
+                                  id="inputDescription"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-6 form-group mt-4">
+                    <p class="card-text mt-4 mb-1 ml-3" th:text="|Request date: ${app.requestDate}|"></p>
+
+<!--                    <label for="inputRequestDate" class="col-sm-6 col-form-label">Request date</label>-->
+<!--                    <input type="number" th:field="*{requestDate}" name="requestDate"-->
+<!--                           class="form-control form-control-sm" id="inputRequestDate" disabled>-->
+
+                    <label class="col-sm-4 col-form-label" for="OStatus">Application status</label>
+                    <select class="form-control form-control-sm" name="status" id="OStatus"
+                            th:field="*{appStatus}" required>
+                        <option value="RECEIVED">Received</option>
+                        <option value="WAITING">Waiting</option>
+                        <option value="APPROVED">Approved</option>
+                        <option value="DECLINED">Declined</option>
+                    </select>
+                    <div>
+                        <button type="submit" class="btn btn-primary align-content-center mt-2">Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+</body>
+</html>

@@ -36,7 +36,6 @@ public class CarServiceImpl implements CarService{
         UserServiceModel currentUser = userService.findByUsername(name);
         carServiceModel.setUser(currentUser);
         Car currentCar = this.modelMapper.map(carServiceModel, Car.class);
-//        System.out.println();
         this.carRepository.saveAndFlush(currentCar);
         return this.modelMapper.map(currentCar, CarServiceModel.class);
     }

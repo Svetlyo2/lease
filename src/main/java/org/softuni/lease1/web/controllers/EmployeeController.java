@@ -45,14 +45,14 @@ public class EmployeeController extends BaseController {
             @Valid @ModelAttribute(name = "bindingModel") EmployeeAddBindingModel bindingModel,
             BindingResult bindingResult,
             ModelAndView modelAndView) {
-        System.out.println();
+
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("bindingModel", bindingModel);
             return super.view("add-employee", modelAndView);
         }
         EmployeeServiceModel employeeServiceModel = this.modelMapper.map(bindingModel, EmployeeServiceModel.class);
         String username = bindingModel.getUsername();
-//        this.employeeService.add(employeeServiceModel, username);
+        this.employeeService.add(employeeServiceModel, username);
         return super.redirect("/employees/all");
     }
 

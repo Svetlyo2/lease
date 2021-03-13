@@ -2,8 +2,6 @@ package org.softuni.lease1.service;
 
 import org.modelmapper.ModelMapper;
 import org.softuni.lease1.domain.entity.Employee;
-import org.softuni.lease1.domain.entity.User;
-import org.softuni.lease1.domain.model.binding.EmployeeAddBindingModel;
 import org.softuni.lease1.domain.model.service.EmployeeServiceModel;
 import org.softuni.lease1.domain.model.service.UserServiceModel;
 import org.softuni.lease1.repository.EmployeeRepository;
@@ -42,6 +40,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeServiceModel findByUsername(String username) {
-        return this.modelMapper.map(this.employeeRepository.findByUser_Username(username), EmployeeServiceModel.class);
+        Employee employee = this.employeeRepository.findByUser_Username(username)
+                .orElseThrow(()-> new IllegalArgumentException("Employee not found!"));
+        return this.modelMapper.map(employee, EmployeeServiceModel.class);
     }
 }

@@ -10,8 +10,9 @@ public class LeaseApplication extends BaseEntity{
     private Employee employee;
     private LocalDateTime requestDate;
     private LocalDateTime decisionDate;
+    private String description;
     private Offer offer;
-    private UserProfile user;
+    private User user;
 
     public LeaseApplication() {
     }
@@ -54,6 +55,15 @@ public class LeaseApplication extends BaseEntity{
         this.decisionDate = decisionDate;
     }
 
+    @Column(name = "description", columnDefinition = "TEXT")
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @OneToOne
     @JoinColumn(name = "offer_id")
     public Offer getOffer() {
@@ -64,12 +74,12 @@ public class LeaseApplication extends BaseEntity{
         this.offer = offer;
     }
 
-    @ManyToOne(targetEntity = UserProfile.class)
-    public UserProfile getUser() {
+    @ManyToOne(targetEntity = User.class)
+    public User getUser() {
         return user;
     }
 
-    public void setUser(UserProfile user) {
+    public void setUser(User user) {
         this.user = user;
     }
 }

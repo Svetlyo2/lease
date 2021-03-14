@@ -1,6 +1,8 @@
 package org.softuni.lease1.domain.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -18,6 +20,7 @@ public class Car extends BaseEntity{
     private String salesperson;
     private String mobile;
     private String email;
+    private String offerUrl;
     private User user;
     private Seller seller;
     private Set<Offer> offers = new HashSet<>();
@@ -71,7 +74,9 @@ public class Car extends BaseEntity{
         this.mileage = mileage;
     }
 
-    @Column(name = "price", nullable = false)
+    @DecimalMin("0")
+    @Digits(integer=8, fraction=2)
+    @Column(name = "price", nullable = false, precision = 10, scale = 2)
     public BigDecimal getPrice() {
         return price;
     }
@@ -107,6 +112,15 @@ public class Car extends BaseEntity{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Column(name = "offer_url")
+    public String getOfferUrl() {
+        return offerUrl;
+    }
+
+    public void setOfferUrl(String offerUrl) {
+        this.offerUrl = offerUrl;
     }
 
     @ManyToOne(targetEntity = User.class)

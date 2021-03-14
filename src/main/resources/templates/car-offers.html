@@ -26,10 +26,14 @@
                             15 BGN
                         </h5>
                     </div>
+
+
+                        <a th:href="@{/offers/add/{id}(id=${car.id})}" class="btn btn-outline-dark">Get a quote</a>
+
                 </div>
-                <a th:href="@{/offers/add/{id}(id=${car.id})}" class="btn btn-outline-dark">Get a quote</a>
             </div>
         </div>
+
         <h4>Your offers</h4>
         <table class="table">
             <thead>
@@ -53,18 +57,23 @@
                     <td th:text="*{residualValue}"></td>
                     <td th:text="*{requestDate}"></td>
                     <td th:text="*{status}"></td>
+                    <th:block sec:authorize="!hasRole('ROLE_MODERATOR')">
                     <td><a class="btn btn-light" th:href="@{/seller/add/{id}(id=${offer.id})}">Apply for leasing</a></td>
+                    </th:block>
                     <th:block sec:authorize="hasRole('ROLE_MODERATOR')">
-                    <!--                <form th:action="@{/offers/confirm/{id}(id=*{id})}" method="post">-->
-                    <!--                    <button class="btn btn-outline-dark mr-2">Confirm</button>-->
-                    <!--                </form>-->
-                    <td>
-                    <a th:href="@{/offers/edit/{id}(id=${offer.id})}" class="btn btn-outline-dark">Review</a></td>
+                    <td><a th:href="@{/offers/edit/{id}(id=${offer.id})}" class="btn btn-outline-dark">Review</a></td>
                     </th:block>
                 </tr>
             </th:block>
             </tbody>
         </table>
+        <th:block sec:authorize="hasRole('ROLE_MODERATOR')">
+            <img th:src="${car.offerUrl}" target="_blank" rel="noopener noreferrer" alt="Car offer">
+            <img th:src="${page2}" alt="">
+            <img th:src="${page3}" alt="">
+            <img th:src="${page4}" alt="">
+        </th:block>
+
     </div>
 </main>
 </body>

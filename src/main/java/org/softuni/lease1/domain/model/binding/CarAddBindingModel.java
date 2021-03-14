@@ -2,6 +2,7 @@ package org.softuni.lease1.domain.model.binding;
 
 import org.softuni.lease1.common.Constants;
 import org.softuni.lease1.domain.entity.CarCondition;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
@@ -17,6 +18,7 @@ public class CarAddBindingModel {
     private String salesperson;
     private String mobile;
     private String email;
+    private MultipartFile carOffer;
 
     public CarAddBindingModel() {
     }
@@ -66,7 +68,7 @@ public class CarAddBindingModel {
     }
 
     @NotNull(message = "Please fill mileage")
-    @Min(value = 0, message = "Mileage could not be negative")
+    @Min(value = 0, message = "Mileage precision=7, scale=2")
     @Max(value = 200000, message = "We could not finance cars with mileage more than 200 000km")
     public Integer getMileage() {
         return mileage;
@@ -77,7 +79,7 @@ public class CarAddBindingModel {
     }
 
     @NotNull
-    @Positive(message = "Price must be at least 0.")
+    @DecimalMin(value = "0", message = "Price could not be negative")
     public BigDecimal getPrice() {
         return price;
     }
@@ -119,6 +121,14 @@ public class CarAddBindingModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public MultipartFile getCarOffer() {
+        return carOffer;
+    }
+
+    public void setCarOffer(MultipartFile carOffer) {
+        this.carOffer = carOffer;
     }
 }
 

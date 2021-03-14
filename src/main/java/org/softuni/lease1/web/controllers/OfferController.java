@@ -1,6 +1,7 @@
 package org.softuni.lease1.web.controllers;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.lease1.common.Constants;
 import org.softuni.lease1.domain.model.binding.OfferAddBindingModel;
 import org.softuni.lease1.domain.model.binding.OfferReviewBindingModel;
 import org.softuni.lease1.domain.model.service.CarServiceModel;
@@ -42,6 +43,13 @@ public class OfferController extends BaseController{
     @GetMapping("/{id}")
     public ModelAndView carOffers(@PathVariable("id")String id, ModelAndView modelAndView){
         CarServiceModel currentCar = this.carService.findCarById(id);
+        String offerUrl = currentCar.getOfferUrl();
+        String pageTwo = Constants.CLOUD_URL+"pg_2/"+offerUrl.substring(offerUrl.lastIndexOf("/")+1);
+        String pageThree = Constants.CLOUD_URL+"pg_3/"+offerUrl.substring(offerUrl.lastIndexOf("/")+1);
+        String pageFour = Constants.CLOUD_URL+"pg_4/"+offerUrl.substring(offerUrl.lastIndexOf("/")+1);
+        modelAndView.addObject("page2", pageTwo);
+        modelAndView.addObject("page3", pageThree);
+        modelAndView.addObject("page4", pageFour);
         modelAndView.addObject("car",currentCar);
         modelAndView.addObject("offers",currentCar.getOffers());
         return super.view("car-offers", modelAndView);

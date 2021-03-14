@@ -16,6 +16,7 @@ public class CarServiceModel {
     private String salesperson;
     private String mobile;
     private String email;
+    private String offerUrl;
     private UserServiceModel user;
     private SellerServiceModel seller;
     private Set<OfferServiceModel> offers;
@@ -101,6 +102,14 @@ public class CarServiceModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getOfferUrl() {
+        return offerUrl;
+    }
+
+    public void setOfferUrl(String offerUrl) {
+        this.offerUrl = offerUrl;
     }
 
     public UserServiceModel getUser() {

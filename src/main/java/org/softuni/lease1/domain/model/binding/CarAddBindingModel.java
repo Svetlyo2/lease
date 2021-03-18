@@ -79,7 +79,7 @@ public class CarAddBindingModel {
     }
 
     @NotNull
-    @DecimalMin(value = "0", message = "Price could not be negative")
+//    @DecimalMin(value = "0", message = "Price could not be negative")
     public BigDecimal getPrice() {
         return price;
     }

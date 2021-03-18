@@ -7,6 +7,7 @@ import org.softuni.lease1.domain.model.service.CarServiceModel;
 import org.softuni.lease1.domain.model.view.CarListViewModel;
 import org.softuni.lease1.service.CarService;
 import org.softuni.lease1.service.CloudinaryService;
+import org.softuni.lease1.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -34,6 +35,7 @@ public class CarController extends BaseController{
     }
 
     @GetMapping("/add")
+    @PageTitle("Add car")
     public ModelAndView add(
             @ModelAttribute("bindingModel")CarAddBindingModel bindingModel,
             ModelAndView modelAndView){
@@ -61,6 +63,7 @@ public class CarController extends BaseController{
         return super.redirect("/car/my-cars");
     }
     @GetMapping("/my-cars")
+    @PageTitle("My cars")
     public ModelAndView showCars(
             @ModelAttribute CarShowBindingModel bindingModel,
             ModelAndView modelAndView,

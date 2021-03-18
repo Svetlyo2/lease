@@ -30,13 +30,13 @@
                 </div>
                 <label for="inputInterest" class="col-sm-2 col-form-label">Interest %</label>
                 <div class="col-md-2">
-                    <input type="number" th:field="*{interest}" class="form-control form-control-sm" id="inputInterest">
+                    <input type="number" step="0.01" th:field="*{interest}" class="form-control form-control-sm" id="inputInterest">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputFee" class="col-sm-2 col-form-label">Management fee %</label>
                 <div class="col-md-2">
-                    <input type="number" th:field="*{fee}" class="form-control form-control-sm" id="inputFee">
+                    <input type="number" step="0.01" th:field="*{fee}" class="form-control form-control-sm" id="inputFee">
                 </div>
                     <label class="col-sm-2 col-form-label" for="OStatus">Status</label>
                 <div class="col-md-2">

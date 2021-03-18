@@ -5,6 +5,7 @@ import org.softuni.lease1.domain.model.binding.EmployeeAddBindingModel;
 import org.softuni.lease1.domain.model.service.EmployeeServiceModel;
 import org.softuni.lease1.domain.model.view.EmployeeViewModel;
 import org.softuni.lease1.service.EmployeeService;
+import org.softuni.lease1.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,7 @@ public class EmployeeController extends BaseController {
 
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PageTitle("Add employee")
     public ModelAndView add(@ModelAttribute(name = "bindingModel") EmployeeAddBindingModel bindingModel,
                             ModelAndView modelAndView) {
         modelAndView.addObject("bindingModel", bindingModel);
@@ -58,6 +60,7 @@ public class EmployeeController extends BaseController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PageTitle("All employees")
     public ModelAndView allUsers(ModelAndView modelAndView) {
         List<EmployeeViewModel> employees = this.employeeService.findAllEmployees()
                 .stream()

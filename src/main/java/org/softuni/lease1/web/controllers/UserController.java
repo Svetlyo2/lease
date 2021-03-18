@@ -8,6 +8,7 @@ import org.softuni.lease1.domain.model.service.UserServiceModel;
 import org.softuni.lease1.domain.model.view.UserListViewModel;
 import org.softuni.lease1.domain.model.view.UserViewModel;
 import org.softuni.lease1.service.UserService;
+import org.softuni.lease1.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,7 @@ public class UserController extends BaseController{
 
     @GetMapping("/register")
     @PreAuthorize("isAnonymous()")
+    @PageTitle("Registration")
     public ModelAndView register(){
         return super.view("register");
     }
@@ -48,12 +50,14 @@ public class UserController extends BaseController{
 
     @GetMapping("/login")
     @PreAuthorize("isAnonymous()")
+    @PageTitle("Login")
     public ModelAndView login() {
         return super.view("login");
     }
 
     @GetMapping("/edit")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Edit user")
     public ModelAndView edit(Principal principal, ModelAndView modelAndView){
         modelAndView.addObject("model",
                 this.modelMapper.map(this.userService.findByUsername(principal.getName()), UserViewModel.class));
@@ -72,6 +76,7 @@ public class UserController extends BaseController{
     }
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PageTitle("Users")
     public ModelAndView allUsers(ModelAndView modelAndView){
         List<UserListViewModel> users = this.userService.findAllUsers()
                 .stream()

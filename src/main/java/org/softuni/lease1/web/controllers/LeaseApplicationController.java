@@ -8,6 +8,7 @@ import org.softuni.lease1.service.LeaseApplicationService;
 import org.softuni.lease1.service.OfferService;
 import org.softuni.lease1.service.SellerService;
 import org.softuni.lease1.service.UserProfileService;
+import org.softuni.lease1.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,7 @@ public class LeaseApplicationController extends BaseController{
 
     @GetMapping("/new")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PageTitle("New applications")
     public ModelAndView allNewApplications(ModelAndView modelAndView) {
         List<LeaseApplicationListViewModel> applications = this.leaseApplicationService.findAllNewApplications()
                 .stream()
@@ -55,6 +57,7 @@ public class LeaseApplicationController extends BaseController{
     }
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PageTitle("Review application")
     public ModelAndView reviewApplication(@PathVariable("id")String id, ModelAndView modelAndView){
 
         LeaseApplicationServiceModel application = this.leaseApplicationService.findApplicationById(id);

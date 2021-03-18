@@ -5,6 +5,7 @@ import org.softuni.lease1.domain.model.binding.SellerAddBindingModel;
 import org.softuni.lease1.domain.model.service.SellerServiceModel;
 import org.softuni.lease1.service.LeaseApplicationService;
 import org.softuni.lease1.service.SellerService;
+import org.softuni.lease1.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,7 @@ public class SellerController extends BaseController{
         this.modelMapper = modelMapper;
     }
     @GetMapping("/add/{id}")
+    @PageTitle("Add seller")
     public ModelAndView add(@PathVariable("id")String id,
                             @ModelAttribute("bindingModel") SellerAddBindingModel bindingModel,
                             ModelAndView modelAndView){

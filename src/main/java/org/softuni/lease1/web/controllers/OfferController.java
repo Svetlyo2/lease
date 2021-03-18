@@ -13,6 +13,7 @@ import org.softuni.lease1.domain.model.view.ProfileViewModel;
 import org.softuni.lease1.service.CarService;
 import org.softuni.lease1.service.OfferService;
 import org.softuni.lease1.service.UserProfileService;
+import org.softuni.lease1.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,7 @@ public class OfferController extends BaseController{
         this.modelMapper = modelMapper;
     }
     @GetMapping("/{id}")
+    @PageTitle("Offers")
     public ModelAndView carOffers(@PathVariable("id")String id, ModelAndView modelAndView){
         CarServiceModel currentCar = this.carService.findCarById(id);
         String offerUrl = currentCar.getOfferUrl();
@@ -55,6 +57,7 @@ public class OfferController extends BaseController{
         return super.view("car-offers", modelAndView);
     }
     @GetMapping("/add/{id}")
+    @PageTitle("Offer request")
     public ModelAndView add(@PathVariable("id")String id,
                             @ModelAttribute("bindingModel") OfferAddBindingModel bindingModel,
                             ModelAndView modelAndView){
@@ -82,6 +85,7 @@ public class OfferController extends BaseController{
 
     @GetMapping("/requested")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PageTitle("Offer requests")
     public ModelAndView allRequests(ModelAndView modelAndView) {
         List<OfferRequestViewModel> requests = this.offerService.findAllRequestedOffers()
                 .stream()
@@ -99,6 +103,7 @@ public class OfferController extends BaseController{
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PageTitle("Review offer")
     public ModelAndView reviewOffer(@PathVariable("id")String id, ModelAndView modelAndView){
         OfferServiceModel offer = this.offerService.findOfferById(id);
         ProfileServiceModel profile = this.userProfileService.findProfile(offer.getCar().getUser().getUsername());

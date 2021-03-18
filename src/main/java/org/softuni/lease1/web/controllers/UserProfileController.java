@@ -9,6 +9,7 @@ import org.softuni.lease1.domain.model.service.ProfileServiceModel;
 import org.softuni.lease1.domain.model.service.UserServiceModel;
 import org.softuni.lease1.domain.model.view.UserViewModel;
 import org.softuni.lease1.service.UserProfileService;
+import org.softuni.lease1.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,7 @@ public class UserProfileController extends BaseController {
     }
 
     @GetMapping("/add")
+    @PageTitle("Add profile")
     public ModelAndView add(
             @ModelAttribute(name = "bindingModel") ProfileAddBindingModel bindingModel,
             ModelAndView modelAndView) {
@@ -56,6 +58,7 @@ public class UserProfileController extends BaseController {
         return super.redirect("/car/my-cars");
     }
     @GetMapping("/show")
+    @PageTitle("Profile")
     public ModelAndView show( ModelAndView modelAndView, Principal principal) {
         ProfileServiceModel profileServiceModel = this.userProfileService.findProfile(principal.getName());
         if (profileServiceModel == null){
@@ -67,6 +70,7 @@ public class UserProfileController extends BaseController {
 
     @GetMapping("/edit")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Edit profile")
     public ModelAndView edit(ModelAndView modelAndView, Principal principal) {
         modelAndView.addObject("model", this.userProfileService.findProfile(principal.getName()));
         return super.view("edit-profile", modelAndView);

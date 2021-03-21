@@ -63,7 +63,7 @@ public class Seller extends BaseEntity{
         this.address = address;
     }
 
-    @OneToMany(mappedBy = "seller")
+    @OneToMany(mappedBy = "seller", fetch = FetchType.EAGER)
     public Set<Car> getCars() {
         return cars;
     }

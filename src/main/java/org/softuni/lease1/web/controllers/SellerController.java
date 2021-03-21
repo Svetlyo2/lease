@@ -35,7 +35,7 @@ public class SellerController extends BaseController{
                             @ModelAttribute("bindingModel") SellerAddBindingModel bindingModel,
                             ModelAndView modelAndView){
         modelAndView.addObject("bindingModel", bindingModel);
-        return super.view("add-seller", modelAndView);
+        return super.view("car/add-seller", modelAndView);
     }
 
     @PostMapping("/add/{id}")
@@ -48,7 +48,7 @@ public class SellerController extends BaseController{
     ){
         if (bindingResult.hasErrors()){
             modelAndView.addObject("bindingModel", bindingModel);
-            return super.view("add-seller", modelAndView);
+            return super.view("car/add-seller", modelAndView);
         }
         this.sellerService.add(this.modelMapper.map(bindingModel, SellerAddBindingModel.class), id);
         this.leaseApplicationService.add(id, principal.getName());

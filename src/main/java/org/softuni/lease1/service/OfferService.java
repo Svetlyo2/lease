@@ -7,6 +7,10 @@ import java.util.List;
 public interface OfferService {
     void add(OfferServiceModel offerServiceModel, String carId);
     OfferServiceModel findOfferById(String id);
+    List<OfferServiceModel> findAllOffers();
     List<OfferServiceModel> findAllRequestedOffers();
     OfferServiceModel reviewOffer(String id,OfferServiceModel offerServiceModel);
+    OfferServiceModel changeOfferStatus(String id,String status);
+    Integer countOverdueRequest();
+    void deleteOffer(String id);
 }

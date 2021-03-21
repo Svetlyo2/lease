@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService{
         if (!this.bCryptPasswordEncoder.matches(oldPassword, user.getPassword())){
             throw new IllegalArgumentException("Incorrect password!");
         }
-        user.setPassword(userServiceModel.getPassword() != null
+        user.setPassword(!userServiceModel.getPassword().trim().isEmpty()
                 ?this.bCryptPasswordEncoder.encode(userServiceModel.getPassword())
                 : user.getPassword());
         user.setEmail(userServiceModel.getEmail());

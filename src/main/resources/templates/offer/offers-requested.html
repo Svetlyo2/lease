@@ -34,7 +34,7 @@
                     <td th:text="*{deposit}"></td>
                     <td th:text="*{term}"></td>
                     <td th:text="*{residualValue}"></td>
-                    <td th:text="*{requestDate}"></td>
+                    <td th:text="*{#temporals.format(requestDate, 'dd-MM-yyyy HH:mm')}"></td>
                     <td th:text="*{status}"></td>
                     <td><a class="btn btn-light" th:href="@{/offers/{id}(id=*{carId})}">Reply</a></td>
                 </tr>

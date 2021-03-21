@@ -132,7 +132,7 @@ public class Car extends BaseEntity{
         this.user = user;
     }
 
-    @ManyToOne(targetEntity = Seller.class)
+    @ManyToOne(targetEntity = Seller.class, fetch = FetchType.LAZY)
     public Seller getSeller() {
         return seller;
     }

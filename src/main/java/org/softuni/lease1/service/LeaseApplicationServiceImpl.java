@@ -8,6 +8,7 @@ import org.softuni.lease1.domain.entity.User;
 import org.softuni.lease1.domain.model.binding.LeaseApplicationAddModel;
 import org.softuni.lease1.domain.model.service.EmployeeServiceModel;
 import org.softuni.lease1.domain.model.service.LeaseApplicationServiceModel;
+import org.softuni.lease1.domain.model.service.OfferServiceModel;
 import org.softuni.lease1.repository.LeaseApplicationRepository;
 import org.springframework.stereotype.Service;
 
@@ -36,9 +37,10 @@ public class LeaseApplicationServiceImpl implements LeaseApplicationService {
     @Override
     public void add(String offerId, String username) {
     LeaseApplicationAddModel leaseApplicationAddModel = new LeaseApplicationAddModel();
+    OfferServiceModel offer = this.offerService.changeOfferStatus(offerId, "APPLIED");
+    leaseApplicationAddModel.setOffer(offer);
     leaseApplicationAddModel.setAppStatus("RECEIVED");
     leaseApplicationAddModel.setRequestDate(LocalDateTime.now());
-    leaseApplicationAddModel.setOffer(this.offerService.findOfferById(offerId));
     leaseApplicationAddModel.setUser(this.modelMapper.map(this.userService.findByUsername(username), User.class));
     this.leaseApplicationRepository.saveAndFlush(this.modelMapper.map(leaseApplicationAddModel, LeaseApplication.class));
     }
@@ -79,5 +81,10 @@ public class LeaseApplicationServiceImpl implements LeaseApplicationService {
         leaseApplication.setAppStatus(AppStatus.valueOf(model.getAppStatus()));
         leaseApplication.setEmployee(this.modelMapper.map(employee, Employee.class));
         return this.modelMapper.map(this.leaseApplicationRepository.saveAndFlush(leaseApplication), LeaseApplicationServiceModel.class);
+    }
+
+    @Override
+    public LeaseApplicationServiceModel findApplicationByOfferId(String id) {
+        return this.leaseApplicationRepository.findByOffer_Id(id).orElse(null);
     }
 }

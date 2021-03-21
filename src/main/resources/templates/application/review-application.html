@@ -88,11 +88,11 @@
                     </div>
                 </div>
                 <div class="col-md-6 form-group mt-4">
-                    <p class="card-text mt-4 mb-1 ml-3" th:text="|Request date: ${app.requestDate}|"></p>
+<!--                    <p class="card-text mt-4 mb-1 ml-3" th:text="|Request date: ${#temporals.format(app.requestDate, 'dd-MM-yyyy')}|"></p>-->
 
-<!--                    <label for="inputRequestDate" class="col-sm-6 col-form-label">Request date</label>-->
-<!--                    <input type="number" th:field="*{requestDate}" name="requestDate"-->
-<!--                           class="form-control form-control-sm" id="inputRequestDate" disabled>-->
+                    <label for="inputRequestDate" class="col-sm-6 col-form-label">Request date</label>
+                    <input type="text" th:value="${#temporals.format(app.requestDate, 'dd-MM-yyyy')}" name="requestDate"
+                           class="form-control form-control-sm" id="inputRequestDate" disabled>
 
                     <label class="col-sm-4 col-form-label" for="OStatus">Application status</label>
                     <select class="form-control form-control-sm" name="status" id="OStatus"

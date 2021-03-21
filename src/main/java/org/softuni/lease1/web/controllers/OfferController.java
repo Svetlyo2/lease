@@ -9,6 +9,7 @@ import org.softuni.lease1.domain.model.service.OfferServiceModel;
 import org.softuni.lease1.domain.model.service.ProfileServiceModel;
 import org.softuni.lease1.domain.model.view.OfferListViewModel;
 import org.softuni.lease1.domain.model.view.OfferRequestViewModel;
+import org.softuni.lease1.domain.model.view.OffersAllViewModel;
 import org.softuni.lease1.domain.model.view.ProfileViewModel;
 import org.softuni.lease1.service.CarService;
 import org.softuni.lease1.service.OfferService;
@@ -16,12 +17,16 @@ import org.softuni.lease1.service.UserProfileService;
 import org.softuni.lease1.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,15 +51,18 @@ public class OfferController extends BaseController{
     public ModelAndView carOffers(@PathVariable("id")String id, ModelAndView modelAndView){
         CarServiceModel currentCar = this.carService.findCarById(id);
         String offerUrl = currentCar.getOfferUrl();
-        String pageTwo = Constants.CLOUD_URL+"pg_2/"+offerUrl.substring(offerUrl.lastIndexOf("/")+1);
-        String pageThree = Constants.CLOUD_URL+"pg_3/"+offerUrl.substring(offerUrl.lastIndexOf("/")+1);
-        String pageFour = Constants.CLOUD_URL+"pg_4/"+offerUrl.substring(offerUrl.lastIndexOf("/")+1);
-        modelAndView.addObject("page2", pageTwo);
-        modelAndView.addObject("page3", pageThree);
-        modelAndView.addObject("page4", pageFour);
+        System.out.println();
+        if (this.hasRole("ROLE_MODERATOR") && offerUrl !=null){
+            String pageTwo = Constants.CLOUD_URL+"pg_2/"+offerUrl.substring(offerUrl.lastIndexOf("/")+1);
+            String pageThree = Constants.CLOUD_URL+"pg_3/"+offerUrl.substring(offerUrl.lastIndexOf("/")+1);
+            String pageFour = Constants.CLOUD_URL+"pg_4/"+offerUrl.substring(offerUrl.lastIndexOf("/")+1);
+            modelAndView.addObject("page2", pageTwo);
+            modelAndView.addObject("page3", pageThree);
+            modelAndView.addObject("page4", pageFour);
+        }
         modelAndView.addObject("car",currentCar);
         modelAndView.addObject("offers",currentCar.getOffers());
-        return super.view("car-offers", modelAndView);
+        return super.view("offer/car-offers", modelAndView);
     }
     @GetMapping("/add/{id}")
     @PageTitle("Offer request")
@@ -62,7 +70,7 @@ public class OfferController extends BaseController{
                             @ModelAttribute("bindingModel") OfferAddBindingModel bindingModel,
                             ModelAndView modelAndView){
         modelAndView.addObject("bindingModel", bindingModel);
-        return super.view("add-offer", modelAndView);
+        return super.view("offer/add-offer", modelAndView);
 
     }
 
@@ -75,7 +83,7 @@ public class OfferController extends BaseController{
     ){
         if (bindingResult.hasErrors()){
             modelAndView.addObject("bindingModel", bindingModel);
-            return super.view("add-offer", modelAndView);
+            return super.view("offer/add-offer", modelAndView);
         }
         OfferServiceModel offerServiceModel = this.modelMapper.map(bindingModel,OfferServiceModel.class);
         offerServiceModel.setStatus("REQUESTED");
@@ -98,8 +106,26 @@ public class OfferController extends BaseController{
                 })
                 .collect(Collectors.toList());
         modelAndView.addObject("offers", requests);
-        return super.view("offers-requested", modelAndView);
+        return super.view("offer/offers-requested", modelAndView);
     }
+    @GetMapping("/all")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PageTitle("All offers")
+    public ModelAndView allOffers(ModelAndView modelAndView) {
+        List<OffersAllViewModel> offers = this.offerService.findAllOffers()
+                .stream()
+                .map(o->{
+                    OffersAllViewModel offer = this.modelMapper.map(o, OffersAllViewModel.class);
+                    offer.setMake(o.getCar().getMake());
+                    offer.setPrice(o.getCar().getPrice());
+                    offer.setUsername(o.getCar().getUser().getUsername());
+                    return offer;
+                })
+                .collect(Collectors.toList());
+        modelAndView.addObject("offers", offers);
+        return super.view("offer/all-offers", modelAndView);
+    }
+
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
@@ -109,7 +135,7 @@ public class OfferController extends BaseController{
         ProfileServiceModel profile = this.userProfileService.findProfile(offer.getCar().getUser().getUsername());
         modelAndView.addObject("profile", this.modelMapper.map(profile, ProfileViewModel.class));
         modelAndView.addObject("bindingModel", this.modelMapper.map(offer, OfferListViewModel.class));
-        return super.view("review-offer", modelAndView);
+        return super.view("offer/review-offer", modelAndView);
     }
 
     @PostMapping("/edit/{id}")
@@ -120,4 +146,24 @@ public class OfferController extends BaseController{
         this.offerService.reviewOffer(id, this.modelMapper.map(offerReviewBindingModel, OfferServiceModel.class));
         return super.redirect("/offers/"+carId);
     }
+
+    @PostMapping("/delete")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    public ModelAndView deleteOffer(String id){
+        this.offerService.deleteOffer(id);
+        return super.redirect("/offers/all");
+    }
+
+    private boolean hasRole(String role) {
+        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        boolean hasRole = false;
+        for (GrantedAuthority authority : authorities) {
+            hasRole = authority.getAuthority().equals(role);
+            if (hasRole) {
+                break;
+            }
+        }
+        return hasRole;
+    }
+
 }

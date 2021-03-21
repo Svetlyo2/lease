@@ -12,4 +12,5 @@ public interface LeaseApplicationService {
     List<LeaseApplicationServiceModel> findAllNewApplications();
     LeaseApplicationServiceModel findApplicationById(String id);
     LeaseApplicationServiceModel reviewApplication(String id, LeaseApplicationServiceModel serviceModel, String username);
+    LeaseApplicationServiceModel findApplicationByOfferId(String id);
 }

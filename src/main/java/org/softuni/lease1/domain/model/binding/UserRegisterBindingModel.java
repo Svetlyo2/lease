@@ -1,5 +1,9 @@
 package org.softuni.lease1.domain.model.binding;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class UserRegisterBindingModel {
     private String username;
     private String password;
@@ -9,6 +13,8 @@ public class UserRegisterBindingModel {
     public UserRegisterBindingModel() {
     }
 
+   @NotNull
+   @NotEmpty
    public String getUsername() {
         return username;
     }
@@ -17,6 +23,8 @@ public class UserRegisterBindingModel {
         this.username = username;
     }
 
+    @NotNull
+    @NotEmpty
     public String getPassword() {
         return password;
     }
@@ -25,6 +33,8 @@ public class UserRegisterBindingModel {
         this.password = password;
     }
 
+    @NotNull
+    @NotEmpty
     public String getConfirmPassword() {
         return confirmPassword;
     }
@@ -33,6 +43,9 @@ public class UserRegisterBindingModel {
         this.confirmPassword = confirmPassword;
     }
 
+    @NotNull
+    @NotEmpty
+    @Email
     public String getEmail() {
         return email;
     }

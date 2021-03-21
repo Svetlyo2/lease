@@ -1,7 +1,7 @@
 <th:block th:fragment="head" xmlns:th="http://www.thymeleaf.org"
           xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <nav class="navbar navbar-expand-lg bg-dark navbar-light text-lg-right">
-        <a class="navbar-brand" th:href="@{/home}">Dream leasing</a>
+        <a class="navbar-brand" th:href="@{/}">Dream leasing</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -38,6 +38,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="moderatorDropdown">
                                 <a class="dropdown-item" th:href="@{/offers/requested}">Offer requests</a>
+                                <a class="dropdown-item" th:href="@{/offers/all}">All offers</a>
                                 <a class="dropdown-item" th:href="@{/applications/new}">New applications</a>
                             </div>
                         </li>

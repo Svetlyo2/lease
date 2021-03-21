@@ -40,7 +40,7 @@ public class CarController extends BaseController{
             @ModelAttribute("bindingModel")CarAddBindingModel bindingModel,
             ModelAndView modelAndView){
         modelAndView.addObject("bindingModel", bindingModel);
-        return super.view("add-car", modelAndView);
+        return super.view("car/add-car", modelAndView);
     }
 
     @PostMapping("/add")
@@ -52,13 +52,15 @@ public class CarController extends BaseController{
     ) throws IOException {
         if (bindingResult.hasErrors()){
             modelAndView.addObject("bindingModel", bindingModel);
-            return super.view("add-car", modelAndView);
+            return super.view("car/add-car", modelAndView);
         }
         CarServiceModel newCarModel = this.modelMapper.map(bindingModel, CarServiceModel.class);
-        String url = this.cloudinaryService.uploadOffer(bindingModel.getCarOffer());
-        if (url.endsWith("pdf")){
-            url = url.substring(0, url.length()-3) +"jpg";        }
-        newCarModel.setOfferUrl(url);
+        if (!bindingModel.getCarOffer().isEmpty()){
+            String url = this.cloudinaryService.uploadOffer(bindingModel.getCarOffer());
+            if (url.endsWith("pdf")){
+                url = url.substring(0, url.length()-3) +"jpg";        }
+            newCarModel.setOfferUrl(url);
+        }
         this.carService.add(newCarModel, principal.getName());
         return super.redirect("/car/my-cars");
     }
@@ -74,6 +76,6 @@ public class CarController extends BaseController{
                 .collect(Collectors.toList());
         modelAndView.setViewName("my-cars");
         modelAndView.addObject("cars", carListViewModels);
-        return super.view("my-cars", modelAndView);
+        return super.view("car/my-cars", modelAndView);
     }
 }

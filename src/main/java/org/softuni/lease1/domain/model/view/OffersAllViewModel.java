@@ -3,7 +3,7 @@ package org.softuni.lease1.domain.model.view;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class OfferRequestViewModel {
+public class OffersAllViewModel {
     private String id;
     private Integer deposit;
     private Integer term;
@@ -12,9 +12,9 @@ public class OfferRequestViewModel {
     private LocalDateTime requestDate;
     private String make;
     private BigDecimal price;
-    private String carId;
+    private String username;
 
-    public OfferRequestViewModel() {
+    public OffersAllViewModel() {
     }
 
     public String getId() {
@@ -81,12 +81,11 @@ public class OfferRequestViewModel {
         this.price = price;
     }
 
-    public String getCarId() {
-        return carId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setCarId(String carId) {
-        this.carId = carId;
+    public void setUsername(String username) {
+        this.username = username;
     }
-
 }

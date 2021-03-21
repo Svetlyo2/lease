@@ -38,7 +38,7 @@ public class EmployeeController extends BaseController {
     public ModelAndView add(@ModelAttribute(name = "bindingModel") EmployeeAddBindingModel bindingModel,
                             ModelAndView modelAndView) {
         modelAndView.addObject("bindingModel", bindingModel);
-        return super.view("add-employee", modelAndView);
+        return super.view("user/add-employee", modelAndView);
     }
 
     @PostMapping("/add")
@@ -50,7 +50,7 @@ public class EmployeeController extends BaseController {
 
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("bindingModel", bindingModel);
-            return super.view("add-employee", modelAndView);
+            return super.view("user/add-employee", modelAndView);
         }
         EmployeeServiceModel employeeServiceModel = this.modelMapper.map(bindingModel, EmployeeServiceModel.class);
         String username = bindingModel.getUsername();
@@ -67,6 +67,6 @@ public class EmployeeController extends BaseController {
                 .map(e->this.modelMapper.map(e, EmployeeViewModel.class))
                 .collect(Collectors.toList());
         modelAndView.addObject("employees", employees);
-        return super.view("all-employees", modelAndView);
+        return super.view("user/all-employees", modelAndView);
     }
 }

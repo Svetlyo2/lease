@@ -53,7 +53,7 @@ public class LeaseApplicationController extends BaseController{
                 })
                 .collect(Collectors.toList());
         modelAndView.addObject("applications",applications);
-        return super.view( "new-applications", modelAndView);
+        return super.view( "application/new-applications", modelAndView);
     }
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
@@ -70,7 +70,7 @@ public class LeaseApplicationController extends BaseController{
         modelAndView.addObject("car", car);
         modelAndView.addObject("seller", seller);
         modelAndView.addObject("offer", offer);
-        return super.view("review-application", modelAndView);
+        return super.view("application/review-application", modelAndView);
     }
 
     @PostMapping("/edit/{id}")

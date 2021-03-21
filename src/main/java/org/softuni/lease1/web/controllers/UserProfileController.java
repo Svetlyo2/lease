@@ -38,7 +38,7 @@ public class UserProfileController extends BaseController {
             @ModelAttribute(name = "bindingModel") ProfileAddBindingModel bindingModel,
             ModelAndView modelAndView) {
         modelAndView.addObject("bindingModel", bindingModel);
-        return super.view("add-profile", modelAndView);
+        return super.view("user/add-profile", modelAndView);
     }
 
     @PostMapping("/add")
@@ -50,12 +50,12 @@ public class UserProfileController extends BaseController {
             Principal principal) {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("bindingModel", bindingModel);
-            return super.view("add-profile", modelAndView);
+            return super.view("user/add-profile", modelAndView);
         }
         ProfileServiceModel profileServiceModel = this.modelMapper.map(bindingModel, ProfileServiceModel.class);
         String name = principal.getName();
         this.userProfileService.add(profileServiceModel, name);
-        return super.redirect("/car/my-cars");
+        return super.redirect("/car/car/my-cars");
     }
     @GetMapping("/show")
     @PageTitle("Profile")
@@ -65,7 +65,7 @@ public class UserProfileController extends BaseController {
             return super.redirect("/profile/add");
         }
         modelAndView.addObject("model", profileServiceModel);
-        return super.view("profile", modelAndView);
+        return super.view("user/profile", modelAndView);
     }
 
     @GetMapping("/edit")
@@ -73,7 +73,7 @@ public class UserProfileController extends BaseController {
     @PageTitle("Edit profile")
     public ModelAndView edit(ModelAndView modelAndView, Principal principal) {
         modelAndView.addObject("model", this.userProfileService.findProfile(principal.getName()));
-        return super.view("edit-profile", modelAndView);
+        return super.view("user/edit-profile", modelAndView);
     }
 
     @PostMapping("/edit")

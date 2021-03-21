@@ -11,6 +11,15 @@
     </header>
     <main class="mt-3">
         <h3>welcome home <span sec:authentication="name"></span></h3>
+        <div sec:authorize="hasRole('ROLE_MODERATOR')">
+             <p class="text-center">
+                 <span  th:if="${newRequests > 0}">
+                     <span th:if="${newRequests == 1}" th:text="|1 new request for offer is waiting for reply|"></span>
+                     <span th:if="${newRequests > 1}" th:text="|${newRequests} new requests for offers are waiting for reply|"></span>
+                 </span>
+                 <span  th:unless="${newRequests > 0}" th:text="|All request for offers have been answered|"></span>
+             </p>
+        </div>
     </main>
 </div>
 </body>

@@ -27,20 +27,29 @@
                     <div class="col-sm-6">
                         <input type="email" th:value="*{email}" name="email" class="form-control" id="inputEmail"
                                placeholder="Enter email">
+                        <th:block th:if="${#fields.hasErrors('email')}">
+                            <small class="error text-muted" th:errors="*{email}"></small>
+                        </th:block>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="oldPassword" class="col-sm-5 col-form-label">Old Password</label>
                     <div class="col-sm-6">
-                        <input type="password" name="oldPassword" class="form-control" id="oldPassword"
+                        <input type="password" th:value="*{oldPassword}" name="oldPassword" class="form-control" id="oldPassword"
                                placeholder="Enter Password">
+                        <th:block th:if="${#fields.hasErrors('oldPassword')}">
+                            <small class="error text-muted" th:errors="*{oldPassword}"></small>
+                        </th:block>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="newPassword" class="col-sm-5 col-form-label">New Password</label>
                     <div class="col-sm-6">
-                        <input type="password" name="password" class="form-control" id="newPassword"
+                        <input type="password" th:value="*{password}" name="password" class="form-control" id="newPassword"
                                placeholder="Enter new password">
+                        <th:block th:if="${#fields.hasErrors('password')}">
+                            <small class="error text-muted" th:errors="*{password}"></small>
+                        </th:block>
                     </div>
                 </div>
                 <div class="form-group row">

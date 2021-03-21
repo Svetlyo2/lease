@@ -4,5 +4,6 @@ public enum OfferStatus {
     REQUESTED,
     PRESENTED,
     REVISED,
+    APPLIED,
     DECLINED
 }

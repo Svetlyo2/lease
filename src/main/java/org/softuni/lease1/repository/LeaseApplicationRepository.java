@@ -15,4 +15,5 @@ public interface LeaseApplicationRepository extends JpaRepository<LeaseApplicati
     List<LeaseApplication> findAllByUser_Id(String userId);
     List<LeaseApplication> findAllByUser_Username(String username);
     List<LeaseApplication> findAllByAppStatus(AppStatus status);
+    Optional<LeaseApplicationServiceModel> findByOffer_Id(String id);
 }

@@ -1,12 +1,16 @@
 package org.softuni.lease1.service;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.lease1.common.Constants;
 import org.softuni.lease1.domain.entity.Offer;
 import org.softuni.lease1.domain.model.service.OfferServiceModel;
 import org.softuni.lease1.repository.OfferRepository;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +18,7 @@ import java.util.stream.Collectors;
 public class OfferServiceImpl implements OfferService {
     private final OfferRepository offerRepository;
     private final CarService carService;
+    private LeaseApplicationService leaseApplicationService;
     private final ModelMapper modelMapper;
 
     public OfferServiceImpl(OfferRepository offerRepository, CarService carService, ModelMapper modelMapper) {
@@ -39,6 +44,14 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
+    public List<OfferServiceModel> findAllOffers() {
+        return this.offerRepository.findAll()
+                .stream()
+                .map(offer -> this.modelMapper.map(offer, OfferServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<OfferServiceModel> findAllRequestedOffers() {
         List<OfferServiceModel> offers = this.offerRepository.findAllByStatusIsContaining("REQUESTED")
                 .stream()
@@ -46,6 +59,19 @@ public class OfferServiceImpl implements OfferService {
                 .collect(Collectors.toList());
         return offers;
     }
+
+    @Override
+    public Integer countOverdueRequest() {
+        LocalDateTime time = LocalDateTime.now();
+        Integer count = (int) this.offerRepository.findAllByStatusIsContaining("REQUESTED")
+                .stream()
+                .filter(o -> {
+                    long duration = Duration.between(o.getRequestDate(), time).toMinutes();
+                    return duration > Constants.REQUEST_OVERDUE_TIME;
+                }).count();
+        return count;
+    }
+
 
     @Override
     public OfferServiceModel reviewOffer(String id,OfferServiceModel offerServiceModel) {
@@ -60,5 +86,26 @@ public class OfferServiceImpl implements OfferService {
         return this.modelMapper.map(this.offerRepository.saveAndFlush(offer), OfferServiceModel.class);
     }
 
+    @Override
+    public OfferServiceModel changeOfferStatus(String offerId,String status) {
+        Offer offer = this.offerRepository.findById(offerId)
+                .orElseThrow(()-> new IllegalArgumentException("Offer not found!"));
+        offer.setStatus(status);
+        return this.modelMapper.map(this.offerRepository.saveAndFlush(offer), OfferServiceModel.class);
+    }
 
+    @Override
+    public void deleteOffer(String id) {
+        Offer offer = this.offerRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Offer not found!"));
+        this.offerRepository.delete(offer);
+    }
+
+    @Scheduled(fixedRate = 300000)
+    private void generateReminder(){
+        int count = this.countOverdueRequest();
+        if (count > 0){
+        System.out.println(this.countOverdueRequest() + " overdue requests");
+        }
+    }
 }

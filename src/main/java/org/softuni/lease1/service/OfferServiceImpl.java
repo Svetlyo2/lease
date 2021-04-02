@@ -5,13 +5,19 @@ import org.softuni.lease1.common.Constants;
 import org.softuni.lease1.domain.entity.Offer;
 import org.softuni.lease1.domain.model.service.OfferServiceModel;
 import org.softuni.lease1.repository.OfferRepository;
+import org.softuni.lease1.web.controllers.api.OfferListResponseModel;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,6 +64,34 @@ public class OfferServiceImpl implements OfferService {
                 .map(offer -> this.modelMapper.map(offer, OfferServiceModel.class))
                 .collect(Collectors.toList());
         return offers;
+    }
+
+    @Override
+    public Map<String, Integer> getLastWeekOffers() {
+        LocalTime midnight = LocalTime.MIDNIGHT;
+        LocalDate today = LocalDate.now();
+        LocalDateTime todayMidnight = LocalDateTime.of(today, midnight);
+        LocalDateTime startDate = todayMidnight.minusDays(6);
+//        return this.offerRepository.findAllByRequestDateAfter(startDate)
+//                .stream()
+//                .map(o->{
+//                    OfferListResponseModel offer = this.modelMapper.map(o, OfferListResponseModel.class);
+//                    return offer;
+//                }).collect(Collectors.toList());
+//        LocalDate start = today.minusDays(7);
+
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yy");
+        Map<String, Integer> offersCount = new LinkedHashMap<>();
+        for (int i = 0; i < 7; i++) {
+            offersCount.put(startDate.plusDays(i).format(format), 0);
+        }
+        this.offerRepository.findAllByRequestDateAfter(startDate)
+                .stream()
+                .forEach(o->{
+                    String offerDate = o.getRequestDate().format(format);
+                    offersCount.put(offerDate, offersCount.get(offerDate)+1);
+                });
+        return offersCount;
     }
 
     @Override

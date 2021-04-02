@@ -26,9 +26,9 @@
                             15 BGN
                         </h5>
                     </div>
-
-
+                    <th:block sec:authorize="!hasRole('ROLE_MODERATOR')">
                         <a th:href="@{/offers/add/{id}(id=${car.id})}" class="btn btn-outline-dark">Get a quote</a>
+                    </th:block>
 
                 </div>
             </div>
@@ -76,7 +76,7 @@
             </th:block>
             </tbody>
         </table>
-        <th:block sec:authorize="hasRole('ROLE_MODERATOR')">
+        <th:block th:if="${car.offerUrl != null}"  sec:authorize="hasRole('ROLE_MODERATOR')">
             <img th:src="${car.offerUrl}" target="_blank" rel="noopener noreferrer" alt="Car offer">
             <img th:src="${page2}" alt="">
             <img th:src="${page3}" alt="">

@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.util.Calendar;
 
 
 public class CarAddBindingModel {
@@ -38,7 +39,7 @@ public class CarAddBindingModel {
     @NotNull
     @NotEmpty(message = Constants.EMPTY_FIELD)
     @NotBlank(message = Constants.EMPTY_FIELD)
-    @Size(min = 1, max = 10, message = "Invalid model!")
+    @Size(min = 1, max = 15, message = "Invalid model!")
     public String getCarModel() {
         return carModel;
     }
@@ -47,7 +48,7 @@ public class CarAddBindingModel {
         this.carModel = carModel;
     }
 
-    @NotNull(message = "Please select car condition")
+    @NotNull(message = Constants.NOT_SELECTED)
     public CarCondition getCarCondition() {
         return carCondition;
     }
@@ -56,9 +57,9 @@ public class CarAddBindingModel {
         this.carCondition = carCondition;
     }
 
-    @NotNull(message = "Please fill year of first registration")
-    @Min(value = 2010, message = "We could not finance cars registered before 2010")
-    @Max(value = 2021, message = "Year of registration could not be after current year")
+    @NotNull(message = Constants.EMPTY_FIELD)
+    @Min(value = Constants.CURRENT_YEAR-Constants.CAR_MAX_AGE, message = "We could not finance cars registered before 2010")
+    @Max(value = Constants.CURRENT_YEAR, message = "Year of registration could not be after current year")
     public Integer getYear() {
         return year;
     }
@@ -67,8 +68,8 @@ public class CarAddBindingModel {
         this.year = year;
     }
 
-    @NotNull(message = "Please fill mileage")
-    @Min(value = 0, message = "Mileage precision=7, scale=2")
+    @NotNull(message = Constants.EMPTY_FIELD)
+    @Min(value = 0, message = Constants.NEGATIVE)
     @Max(value = 200000, message = "We could not finance cars with mileage more than 200 000km")
     public Integer getMileage() {
         return mileage;
@@ -79,7 +80,7 @@ public class CarAddBindingModel {
     }
 
     @NotNull
-//    @DecimalMin(value = "0", message = "Price could not be negative")
+    @DecimalMin(value = "0", message = Constants.NEGATIVE)
     public BigDecimal getPrice() {
         return price;
     }

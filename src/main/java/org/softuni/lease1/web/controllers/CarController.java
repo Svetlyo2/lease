@@ -2,7 +2,6 @@ package org.softuni.lease1.web.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.softuni.lease1.domain.model.binding.CarAddBindingModel;
-import org.softuni.lease1.domain.model.binding.CarShowBindingModel;
 import org.softuni.lease1.domain.model.service.CarServiceModel;
 import org.softuni.lease1.domain.model.view.CarListViewModel;
 import org.softuni.lease1.service.CarService;
@@ -67,7 +66,6 @@ public class CarController extends BaseController{
     @GetMapping("/my-cars")
     @PageTitle("My cars")
     public ModelAndView showCars(
-            @ModelAttribute CarShowBindingModel bindingModel,
             ModelAndView modelAndView,
             Principal principal){
         List<CarListViewModel> carListViewModels = carService.findCarsByUser(principal.getName())

@@ -55,7 +55,7 @@ public class UserProfileController extends BaseController {
         ProfileServiceModel profileServiceModel = this.modelMapper.map(bindingModel, ProfileServiceModel.class);
         String name = principal.getName();
         this.userProfileService.add(profileServiceModel, name);
-        return super.redirect("/car/car/my-cars");
+        return super.redirect("/car/my-cars");
     }
     @GetMapping("/show")
     @PageTitle("Profile")
@@ -71,16 +71,24 @@ public class UserProfileController extends BaseController {
     @GetMapping("/edit")
     @PreAuthorize("isAuthenticated()")
     @PageTitle("Edit profile")
-    public ModelAndView edit(ModelAndView modelAndView, Principal principal) {
-        modelAndView.addObject("model", this.userProfileService.findProfile(principal.getName()));
+    public ModelAndView edit(@ModelAttribute(name = "bindingModel")ProfileEditBindingModel bindingModel,
+                             ModelAndView modelAndView,
+                             Principal principal) {
+        modelAndView.addObject("bindingModel", this.userProfileService.findProfile(principal.getName()));
         return super.view("user/edit-profile", modelAndView);
     }
 
     @PostMapping("/edit")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView editConfirm(@ModelAttribute ProfileEditBindingModel profileEditBindingModel,
+    public ModelAndView editConfirm(@Valid @ModelAttribute(name = "bindingModel") ProfileEditBindingModel bindingModel,
+                                    BindingResult bindingResult,
+                                    ModelAndView modelAndView,
                                     Principal principal) {
-        this.userProfileService.editProfile(this.modelMapper.map(profileEditBindingModel, ProfileServiceModel.class), principal.getName());
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("bindingModel", bindingModel);
+            return super.view("user/edit-profile", modelAndView);
+        }
+        this.userProfileService.editProfile(this.modelMapper.map(bindingModel, ProfileServiceModel.class), principal.getName());
         return super.redirect("/profile/show");
     }
 }

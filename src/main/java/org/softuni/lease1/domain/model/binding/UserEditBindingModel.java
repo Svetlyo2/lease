@@ -1,5 +1,9 @@
 package org.softuni.lease1.domain.model.binding;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class UserEditBindingModel {
     private String username;
     private String oldPassword;
@@ -18,6 +22,8 @@ public class UserEditBindingModel {
         this.username = username;
     }
 
+    @NotNull
+    @NotEmpty
     public String getOldPassword() {
         return oldPassword;
     }
@@ -42,6 +48,9 @@ public class UserEditBindingModel {
         this.confirmPassword = confirmPassword;
     }
 
+    @NotNull
+    @NotEmpty
+    @Email
     public String getEmail() {
         return email;
     }

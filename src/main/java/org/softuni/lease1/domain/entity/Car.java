@@ -28,6 +28,7 @@ public class Car extends BaseEntity{
     public Car() {
     }
 
+    @Size(min = 2, max = 15, message = "Invalid make")
     @Column(name = "make", columnDefinition = "TEXT", nullable = false)
     public String getMake() {
         return make;
@@ -37,6 +38,7 @@ public class Car extends BaseEntity{
         this.make = make;
     }
 
+    @Size(min = 1, max = 15, message = "Invalid model")
     @Column(name = "car_model", columnDefinition = "TEXT", nullable = false)
     public String getCarModel() {
         return carModel;

@@ -31,7 +31,7 @@ public class ProfileAddBindingModel {
         this.fullName = fullName;
     }
 
-    @NotNull(message = "Please select type")
+    @NotNull(message = Constants.NOT_SELECTED)
     public Type getType() {
         return type;
     }

@@ -125,6 +125,13 @@ public class OfferController extends BaseController{
         modelAndView.addObject("offers", offers);
         return super.view("offer/all-offers", modelAndView);
     }
+    @GetMapping("/statistics")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PageTitle("Statistics")
+    public ModelAndView statistics(ModelAndView modelAndView) {
+
+        return super.view("offer/statistics", modelAndView);
+    }
 
 
     @GetMapping("/edit/{id}")

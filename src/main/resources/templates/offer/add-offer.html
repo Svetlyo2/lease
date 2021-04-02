@@ -15,18 +15,21 @@
                 <label for="inputDeposit" class="col-sm-2 col-form-label">Deposit %</label>
                 <div class="col-sm-10">
                     <input type="number" th:field="*{deposit}" name="deposit" class="form-control" id="inputDeposit" placeholder="Minimum deposit is 10% for new cars and 15% for used cars">
+                    <small th:each="error : ${#fields.errors('deposit')}" th:text="${error}"></small>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputTerm" class="col-sm-2 col-form-label">Repayment term</label>
                 <div class="col-sm-10">
                     <input type="number" th:field="*{term}" name="term" class="form-control" id="inputTerm" placeholder="Maximum duration is 72 months for new cars and 48 months for used cars">
+                    <small th:each="error : ${#fields.errors('term')}" th:text="${error}"></small>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputRV" class="col-sm-2 col-form-label">Residual value %</label>
                 <div class="col-sm-10">
                     <input type="number" th:field="*{residualValue}" name="residualValue" class="form-control" id="inputRV" placeholder="Enter residual value">
+                    <small th:each="error : ${#fields.errors('residualValue')}" th:text="${error}"></small>
                 </div>
             </div>
 <!--            <input type="hidden" th:text="${id}"/>-->

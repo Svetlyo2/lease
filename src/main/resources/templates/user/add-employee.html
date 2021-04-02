@@ -16,12 +16,12 @@
                 <div class="form-group col-md-3">
                     <label for="inputUsername">Username</label>
                     <input type="text" th:field="*{username}" name="username" class="form-control" id="inputUsername"
-                           placeholder="Enter employee's username">
+                           placeholder="Enter employee's username" required>
                     <small th:each="error : ${#fields.errors('username')}" th:text="${error}"></small>
                 </div>
                 <div class="form-group col-md-6" th:classappend="${#fields.hasErrors('fullName')}? 'text-danger'">
                     <label for="inputFullName">Full name</label>
-                    <input type="text" th:field="*{fullName}" class="form-control" name="fullName" id="inputFullName">
+                    <input type="text" th:field="*{fullName}" class="form-control" name="fullName" id="inputFullName" required>
                     <small th:each="error : ${#fields.errors('fullName')}" th:text="${error}"></small>
                 </div>
             </div>
@@ -29,12 +29,13 @@
                 <div class="form-group col-md-4">
                     <label for="inputDepartment">Department</label>
                     <input type="text" th:field="*{department}" name="department" class="form-control" id="inputDepartment"
-                           placeholder="Enter employee's department">
+                           placeholder="Enter employee's department" required>
                     <small th:each="error : ${#fields.errors('department')}" th:text="${error}"></small>
                 </div>
                 <div class="form-group col-md-5">
                     <label for="inputPosition">Position</label>
-                    <input type="text" th:field="*{position}"name="city" class="form-control mr-2" id="inputPosition">
+                    <input type="text" th:field="*{position}"name="position" class="form-control mr-2" id="inputPosition" required>
+                    <small th:each="error : ${#fields.errors('position')}" th:text="${error}" class="error text-muted"></small>
                 </div>
             </div>
             <button class="btn btn-primary">Add employee</button>

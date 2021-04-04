@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"></th:block>
+</header>
+<main>
+    <div class="container-fluid d-flex flex-column align-items-center">
+        <h4 class="mt-4">Leasing offer</h4>
+        <div class="container w-50 mx-auto">
+            <div class="row mb-1 d-flex justify-content-between">
+                <div class="col-sm-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-md-column justify-content-between">
+                                <p id="price" class="card-text mb-0" th:text="|Price: ${car.price} BGN|"></p>
+                                <p class="card-text mb-0" th:with="variable = ${offer.deposit}, controllerVar = ${car.price}, result = ${(100-variable) * controllerVar / 100}">
+                                    <span id="credit" th:text="|Net credit: ${result} BGN|"></span>
+                                </p>
+                                <p class="card-text mb-0" th:with="variable = ${offer.residualValue}, controllerVar = ${car.price}, result = ${variable * controllerVar / 100}">
+                                    <span id="res-value" th:text="|Residual value: ${result} BGN|"></span>
+                                </p>
+                                <p id="term" class="card-text mb-0" th:text="|Term: ${offer.term}|"></p>
+                                <p id="interest" class="card-text mb-0" th:text="|Interest %: ${offer.interest}|"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="card">
+                        <div class="card-body" th:object="${offer}" th:with="variable = *{deposit}, fee = *{fee}, controllerVar = ${car.price},
+                        result = ${variable * controllerVar / 100}, result2 = ${fee * controllerVar / 100}, result3 = ${result + result2}">
+                            <div class="d-flex flex-md-column justify-content-between">
+                                <p class="card-text mb-0" >
+                                    <span th:text="|Deposit: ${result} BGN|"></span>
+                                </p>
+                                <p class="card-text mb-0">
+                                    <span th:text="|Fee: ${#numbers.formatDecimal(result2,1,2,'POINT')} BGN|"></span>
+                                </p>
+                                <p class="card-text mb-0">
+                                    <span th:text="|Initial payment: ${#numbers.formatDecimal(result3,1,2,'POINT')} BGN|"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-2 d-flex justify-content-center">
+                <div class="card-body text-center font-weight-bold" id="installment">Monthly payment: 555 BGN</div>
+            </div>
+        </div>
+<!--        <script src="/js/calculator.js"></script>-->
+<!--        <script type="text/javascript" th:src="@{/js/calculator.js}"></script>-->
+<!--        <button type="button" th:onclick="calculatePayment()">Calculate</button>-->
+<!--        <script th:inline="javascript">-->
+<!--            -->
+<!--            var price = [[${car.price}]]-->
+<!--            var term = [[${offer.term}]]-->
+<!--            var deposit = [[${offer.deposit}]]-->
+<!--            var interest = [[${offer.interest}]]-->
+<!--            var residualValue = [[${offer.residualValue}]]-->
+<!--            var credit = price*(100 - deposit) / 100;-->
+
+<!--            console.log(credit)-->
+<!--        </script>-->
+
+    </div>
+</main>
+</body>
+</html>

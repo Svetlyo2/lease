@@ -4,8 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.softuni.lease1.common.Constants;
 import org.softuni.lease1.domain.entity.Offer;
 import org.softuni.lease1.domain.model.service.OfferServiceModel;
+import org.softuni.lease1.error.OfferNotFoundException;
 import org.softuni.lease1.repository.OfferRepository;
-import org.softuni.lease1.web.controllers.api.OfferListResponseModel;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +23,6 @@ import java.util.stream.Collectors;
 public class OfferServiceImpl implements OfferService {
     private final OfferRepository offerRepository;
     private final CarService carService;
-    private LeaseApplicationService leaseApplicationService;
     private final ModelMapper modelMapper;
 
     public OfferServiceImpl(OfferRepository offerRepository, CarService carService, ModelMapper modelMapper) {
@@ -46,7 +44,7 @@ public class OfferServiceImpl implements OfferService {
     public OfferServiceModel findOfferById(String id) {
         return  this.offerRepository.findById(id)
                 .map(o->this.modelMapper.map(o, OfferServiceModel.class))
-                .orElseThrow(() -> new IllegalArgumentException("Offer not found!"));
+                .orElseThrow(() -> new OfferNotFoundException("Offer with this id was not found!"));
     }
 
     @Override
@@ -72,16 +70,9 @@ public class OfferServiceImpl implements OfferService {
         LocalDate today = LocalDate.now();
         LocalDateTime todayMidnight = LocalDateTime.of(today, midnight);
         LocalDateTime startDate = todayMidnight.minusDays(6);
-//        return this.offerRepository.findAllByRequestDateAfter(startDate)
-//                .stream()
-//                .map(o->{
-//                    OfferListResponseModel offer = this.modelMapper.map(o, OfferListResponseModel.class);
-//                    return offer;
-//                }).collect(Collectors.toList());
-//        LocalDate start = today.minusDays(7);
-
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yy");
         Map<String, Integer> offersCount = new LinkedHashMap<>();
+
         for (int i = 0; i < 7; i++) {
             offersCount.put(startDate.plusDays(i).format(format), 0);
         }
@@ -110,7 +101,7 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public OfferServiceModel reviewOffer(String id,OfferServiceModel offerServiceModel) {
         Offer offer = this.offerRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("Offer not found!"));
+                .orElseThrow(()-> new OfferNotFoundException("Offer with this id was not found!"));
         offer.setDeposit(offerServiceModel.getDeposit());
         offer.setTerm(offerServiceModel.getTerm());
         offer.setResidualValue(offerServiceModel.getResidualValue());
@@ -123,7 +114,7 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public OfferServiceModel changeOfferStatus(String offerId,String status) {
         Offer offer = this.offerRepository.findById(offerId)
-                .orElseThrow(()-> new IllegalArgumentException("Offer not found!"));
+                .orElseThrow(()-> new OfferNotFoundException("Offer was not found!"));
         offer.setStatus(status);
         return this.modelMapper.map(this.offerRepository.saveAndFlush(offer), OfferServiceModel.class);
     }
@@ -131,7 +122,7 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public void deleteOffer(String id) {
         Offer offer = this.offerRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("Offer not found!"));
+                .orElseThrow(()-> new OfferNotFoundException("Offer with this id was not found!"));
         this.offerRepository.delete(offer);
     }
 

@@ -58,6 +58,7 @@
                     <td th:text="*{#temporals.format(requestDate, 'dd-MM-yyyy HH:mm')}"></td>
                     <td th:text="*{status}"></td>
                     <th:block sec:authorize="!hasRole('ROLE_MODERATOR')">
+                    <td th:if="${offer.status == 'PRESENTED' or offer.status == 'REVISED'}"><a class="btn btn-light" th:href="@{/offers/view/{id}(id=${offer.id})}">View offer</a></td>
                     <td th:if="${offer.status == 'PRESENTED' or offer.status == 'REVISED'}"><a class="btn btn-light" th:href="@{/seller/add/{id}(id=${offer.id})}">Apply for leasing</a></td>
                     </th:block>
                     <th:block sec:authorize="hasRole('ROLE_MODERATOR')">

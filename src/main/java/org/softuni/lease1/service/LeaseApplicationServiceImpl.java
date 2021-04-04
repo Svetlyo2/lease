@@ -9,6 +9,8 @@ import org.softuni.lease1.domain.model.binding.LeaseApplicationAddModel;
 import org.softuni.lease1.domain.model.service.EmployeeServiceModel;
 import org.softuni.lease1.domain.model.service.LeaseApplicationServiceModel;
 import org.softuni.lease1.domain.model.service.OfferServiceModel;
+import org.softuni.lease1.error.ApplicationNotFoundException;
+import org.softuni.lease1.error.OfferNotFoundException;
 import org.softuni.lease1.repository.LeaseApplicationRepository;
 import org.springframework.stereotype.Service;
 
@@ -67,14 +69,14 @@ public class LeaseApplicationServiceImpl implements LeaseApplicationService {
     @Override
     public LeaseApplicationServiceModel findApplicationById(String id) {
         LeaseApplication app = this.leaseApplicationRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("Lease application not found!"));
+                .orElseThrow(() -> new ApplicationNotFoundException("Lease application with this id was not found!"));
         return this.modelMapper.map(app, LeaseApplicationServiceModel.class);
     }
 
     @Override
     public LeaseApplicationServiceModel reviewApplication(String id, LeaseApplicationServiceModel model, String username) {
         LeaseApplication leaseApplication = this.leaseApplicationRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("Application not found!"));
+                .orElseThrow(() -> new ApplicationNotFoundException("Lease application with this id was not found!"));
         EmployeeServiceModel employee = this.employeeService.findByUsername(username);
         leaseApplication.setDecisionDate(LocalDateTime.now());
         leaseApplication.setDescription(model.getDescription());

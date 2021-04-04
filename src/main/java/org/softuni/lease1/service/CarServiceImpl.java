@@ -8,6 +8,8 @@ import org.softuni.lease1.domain.model.service.CarServiceModel;
 import org.softuni.lease1.domain.model.service.OfferServiceModel;
 import org.softuni.lease1.domain.model.service.SellerServiceModel;
 import org.softuni.lease1.domain.model.service.UserServiceModel;
+import org.softuni.lease1.error.CarNotFoundException;
+import org.softuni.lease1.error.OfferNotFoundException;
 import org.softuni.lease1.repository.CarRepository;
 import org.softuni.lease1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +49,14 @@ public class CarServiceImpl implements CarService{
                 .stream()
                 .map(c ->this.modelMapper.map(c,CarServiceModel.class))
                 .collect(Collectors.toList());
-        System.out.println(carList.size());
         return carList;
     }
 
     @Override
     public CarServiceModel findCarById(String id) {
-        Car car = this.carRepository.findById(id).orElse(null);
+        Car car = this.carRepository.findById(id)
+                .orElseThrow(() -> new CarNotFoundException("Car with this id was not found!"));
+
         return this.modelMapper.map(car, CarServiceModel.class);
     }
 
@@ -66,7 +69,8 @@ public class CarServiceImpl implements CarService{
 
     @Override
     public void addOffer(OfferServiceModel offerServiceModel, String id) {
-        Car car = this.carRepository.findById(id).orElse(null);
+        Car car = this.carRepository.findById(id)
+                .orElseThrow(() -> new CarNotFoundException("Car with this id was not found!"));
         Offer offer = this.modelMapper.map(offerServiceModel, Offer.class);
         car.getOffers().add(offer);
         this.carRepository.saveAndFlush(car);

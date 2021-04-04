@@ -3,6 +3,7 @@ package org.softuni.lease1.service;
 import org.modelmapper.ModelMapper;
 import org.softuni.lease1.domain.entity.User;
 import org.softuni.lease1.domain.model.service.UserServiceModel;
+import org.softuni.lease1.error.OfferNotFoundException;
 import org.softuni.lease1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -72,7 +73,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void setUserRole(String id, String role) {
-        User user = this.userRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Wrong id"));
+        User user = this.userRepository.findById(id)
+                .orElseThrow(() -> new OfferNotFoundException("User with this id was not found!"));
         UserServiceModel userServiceModel = this.modelMapper.map(user, UserServiceModel.class);
         userServiceModel.getAuthorities().clear();
         switch (role) {
@@ -94,6 +96,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return this.userRepository.findByUsername(s).orElseThrow(()->new UsernameNotFoundException("Username not found"));
+        return this.userRepository.findByUsername(s)
+                .orElseThrow(()->new UsernameNotFoundException("Username not found"));
     }
 }

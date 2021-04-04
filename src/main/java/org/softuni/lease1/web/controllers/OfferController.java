@@ -51,7 +51,6 @@ public class OfferController extends BaseController{
     public ModelAndView carOffers(@PathVariable("id")String id, ModelAndView modelAndView){
         CarServiceModel currentCar = this.carService.findCarById(id);
         String offerUrl = currentCar.getOfferUrl();
-        System.out.println();
         if (this.hasRole("ROLE_MODERATOR") && offerUrl !=null){
             String pageTwo = Constants.CLOUD_URL+"pg_2/"+offerUrl.substring(offerUrl.lastIndexOf("/")+1);
             String pageThree = Constants.CLOUD_URL+"pg_3/"+offerUrl.substring(offerUrl.lastIndexOf("/")+1);
@@ -131,6 +130,17 @@ public class OfferController extends BaseController{
     public ModelAndView statistics(ModelAndView modelAndView) {
 
         return super.view("offer/statistics", modelAndView);
+    }
+
+    @GetMapping("/view/{id}")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PageTitle("Offer")
+    public ModelAndView viewOffer (@PathVariable("id")String id, ModelAndView modelAndView) {
+        OfferServiceModel offer = this.offerService.findOfferById(id);
+        CarServiceModel car = offer.getCar();
+        modelAndView.addObject("offer", offer);
+        modelAndView.addObject("car", car);
+        return super.view("offer/view-offer", modelAndView);
     }
 
 

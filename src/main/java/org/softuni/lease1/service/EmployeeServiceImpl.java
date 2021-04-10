@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.softuni.lease1.domain.entity.Employee;
 import org.softuni.lease1.domain.model.service.EmployeeServiceModel;
 import org.softuni.lease1.domain.model.service.UserServiceModel;
+import org.softuni.lease1.error.EmployeeNotFoundException;
 import org.softuni.lease1.error.OfferNotFoundException;
 import org.softuni.lease1.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeServiceModel findByUsername(String username) {
         Employee employee = this.employeeRepository.findByUser_Username(username)
-                .orElseThrow(() -> new OfferNotFoundException("Employee with this id was not found!"));
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee with this id was not found!"));
         return this.modelMapper.map(employee, EmployeeServiceModel.class);
     }
 }

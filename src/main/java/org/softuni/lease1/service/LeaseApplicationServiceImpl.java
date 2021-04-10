@@ -37,14 +37,15 @@ public class LeaseApplicationServiceImpl implements LeaseApplicationService {
 
 
     @Override
-    public void add(String offerId, String username) {
+    public LeaseApplicationServiceModel add(String offerId, String username) {
     LeaseApplicationAddModel leaseApplicationAddModel = new LeaseApplicationAddModel();
     OfferServiceModel offer = this.offerService.changeOfferStatus(offerId, "APPLIED");
     leaseApplicationAddModel.setOffer(offer);
     leaseApplicationAddModel.setAppStatus("RECEIVED");
     leaseApplicationAddModel.setRequestDate(LocalDateTime.now());
     leaseApplicationAddModel.setUser(this.modelMapper.map(this.userService.findByUsername(username), User.class));
-    this.leaseApplicationRepository.saveAndFlush(this.modelMapper.map(leaseApplicationAddModel, LeaseApplication.class));
+    LeaseApplication application = this.leaseApplicationRepository.saveAndFlush(this.modelMapper.map(leaseApplicationAddModel, LeaseApplication.class));
+    return this.modelMapper.map(application, LeaseApplicationServiceModel.class);
     }
 
     @Override

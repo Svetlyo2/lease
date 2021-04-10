@@ -25,11 +25,12 @@ public class UserProfileServiceIml implements UserProfileService{
     }
 
     @Override
-    public void add(ProfileServiceModel profileServiceModel, String name) {
+    public ProfileServiceModel add(ProfileServiceModel profileServiceModel, String name) {
+//        long count = this.userService.findAllUsers().size();
         UserServiceModel userServiceModel = userService.findByUsername(name);
         profileServiceModel.setUser(userServiceModel);
-        this.userProfileRepository.saveAndFlush(this.modelMapper.map(profileServiceModel, UserProfile.class));
-
+        UserProfile profile = this.userProfileRepository.saveAndFlush(this.modelMapper.map(profileServiceModel, UserProfile.class));
+        return this.modelMapper.map(profile, ProfileServiceModel.class);
     }
 
     @Override

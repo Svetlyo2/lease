@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import java.util.List;
 
 public interface LeaseApplicationService {
-    void add(String offerId, String username);
+    LeaseApplicationServiceModel add(String offerId, String username);
     List<LeaseApplicationServiceModel> findApplicationsByUser(String username);
     List<LeaseApplicationServiceModel> findAllNewApplications();
     LeaseApplicationServiceModel findApplicationById(String id);

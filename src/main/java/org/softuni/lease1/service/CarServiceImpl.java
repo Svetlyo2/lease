@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CarServiceImpl implements CarService{
+public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     private final UserRepository userRepository;
     private final UserService userService;
@@ -47,7 +47,7 @@ public class CarServiceImpl implements CarService{
         UserServiceModel user = userService.findByUsername(name);
         List<CarServiceModel> carList = this.carRepository.findAllByUser_Username(name).orElseThrow(null)
                 .stream()
-                .map(c ->this.modelMapper.map(c,CarServiceModel.class))
+                .map(c -> this.modelMapper.map(c, CarServiceModel.class))
                 .collect(Collectors.toList());
         return carList;
     }

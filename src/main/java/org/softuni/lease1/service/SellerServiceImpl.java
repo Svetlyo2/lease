@@ -16,6 +16,7 @@ public class SellerServiceImpl implements SellerService {
     private final CarService carService;
     private final ModelMapper modelMapper;
 
+
     public SellerServiceImpl(SellerRepository sellerRepository, OfferService offerService, CarService carService, ModelMapper modelMapper) {
         this.sellerRepository = sellerRepository;
         this.offerService = offerService;
@@ -23,23 +24,21 @@ public class SellerServiceImpl implements SellerService {
         this.modelMapper = modelMapper;
     }
 
-    public SellerRepository getSellerRepository() {
-        return sellerRepository;
-    }
-
     @Override
-    public void add(SellerAddBindingModel sellerAddBindingModel, String offerId) {
+    public SellerServiceModel add(SellerAddBindingModel sellerAddBindingModel, String offerId) {
         Seller seller = this.sellerRepository.findByUIC(sellerAddBindingModel.getUIC().trim()).orElse(null);
             CarServiceModel car = this.offerService.findOfferById(offerId).getCar();
         if (seller != null){
             seller.getCars().add(this.modelMapper.map(car, Car.class));
             Seller newSeller = this.sellerRepository.saveAndFlush(seller);
             this.carService.setSeller(this.modelMapper.map(newSeller, SellerServiceModel.class), car.getId());
+            return this.modelMapper.map(newSeller, SellerServiceModel.class);
 
         } else {
             sellerAddBindingModel.getCars().add(this.modelMapper.map(car, Car.class));
             Seller newSeller = this.sellerRepository.saveAndFlush(this.modelMapper.map(sellerAddBindingModel, Seller.class));
             this.carService.setSeller(this.modelMapper.map(newSeller, SellerServiceModel.class), car.getId());
+            return this.modelMapper.map(newSeller, SellerServiceModel.class);
         }
     }
 }

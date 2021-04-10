@@ -4,5 +4,5 @@ import org.softuni.lease1.domain.model.binding.SellerAddBindingModel;
 import org.softuni.lease1.domain.model.service.SellerServiceModel;
 
 public interface SellerService {
-    void add(SellerAddBindingModel sellerAddBindingModel, String offerId);
+    SellerServiceModel add(SellerAddBindingModel sellerAddBindingModel, String offerId);
 }

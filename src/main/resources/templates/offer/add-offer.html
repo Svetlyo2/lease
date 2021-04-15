@@ -3,41 +3,42 @@
 <head>
     <th:block th:include="~{fragments/head}"></th:block>
 </head>
-<body>
+<body class="bg-4">
 <header>
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main>
     <div class="container-fluid w-75 m-auto">
-        <h3 class="text-center">Your payment plan</h3>
-        <form th:object="${bindingModel}" th:action="@{/offers/add/{id}(id=${id})}" th:method="post">
-            <div class="form-group row">
-                <label for="inputDeposit" class="col-sm-2 col-form-label">Deposit %</label>
-                <div class="col-sm-10">
+        <h3 class="text-center my-5">Enter preferred payment plan</h3>
+        <form th:object="${bindingModel}" th:action="@{/offers/add/{id}(id=${id})}" th:method="post" class="d-flex flex-column align-items-md-center">
+            <div class="form-group row w-75">
+                <label for="inputDeposit" class="col-sm-3 col-form-label">Deposit %</label>
+                <div class="col-sm-9">
                     <input type="number" th:field="*{deposit}" name="deposit" class="form-control" id="inputDeposit" placeholder="Minimum deposit is 10% for new cars and 15% for used cars">
                     <small th:each="error : ${#fields.errors('deposit')}" th:text="${error}"></small>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="inputTerm" class="col-sm-2 col-form-label">Repayment term</label>
-                <div class="col-sm-10">
+            <div class="form-group row w-75">
+                <label for="inputTerm" class="col-sm-3 col-form-label">Repayment term</label>
+                <div class="col-sm-9">
                     <input type="number" th:field="*{term}" name="term" class="form-control" id="inputTerm" placeholder="Maximum duration is 72 months for new cars and 48 months for used cars">
                     <small th:each="error : ${#fields.errors('term')}" th:text="${error}"></small>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="inputRV" class="col-sm-2 col-form-label">Residual value %</label>
-                <div class="col-sm-10">
+            <div class="form-group row w-75">
+                <label for="inputRV" class="col-sm-3 col-form-label">Residual value %</label>
+                <div class="col-sm-9">
                     <input type="number" th:field="*{residualValue}" name="residualValue" class="form-control" id="inputRV" placeholder="Enter residual value">
                     <small th:each="error : ${#fields.errors('residualValue')}" th:text="${error}"></small>
                 </div>
             </div>
 <!--            <input type="hidden" th:text="${id}"/>-->
-            <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary align-content-center">Get an offer</button>
-            </div>
+            <button type="submit" class="btn btn-outline-dark align-content-center mt-4">Get an offer</button>
         </form>
     </div>
 </main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
 </body>
 </html>

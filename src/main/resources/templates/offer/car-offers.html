@@ -3,15 +3,18 @@
 <head>
     <th:block th:include="~{fragments/head}"></th:block>
 </head>
-<body>
+<body class="bg-4">
 <header>
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main>
+    <div class="img-right-0 d-flex justify-content-lg-end">
+        <img src="https://res.cloudinary.com/jdsv/image/upload/v1618520368/ok3_apmshl.png" style="width:80%;">
+    </div>
     <div class="container-fluid d-flex flex-column align-items-center w-75">
-        <div class="card text-center m-2" style="width: 26rem;">
+        <div class="card text-center m-2 border-dark text-white bg-info" style="width: 26rem;">
             <div th:object="${car}" class="card-body">
-                <h5 class="card-title" th:text="|*{make} *{carModel}|"> Astra</h5>
+                <h4 class="card-title" th:text="|*{make} *{carModel}|"> Astra</h4>
                 <div class="container">
                     <div class="row">
                         <div class="col-sm" th:text="*{carCondition}">
@@ -52,23 +55,23 @@
             <th:block th:each="offer, iter: ${offers}" th:object="${offer}">
                 <tr>
                     <td scope="row" th:text="|${iter.index + 1}|"></td>
-                    <td th:text="*{deposit}"></td>
-                    <td th:text="*{term}"></td>
-                    <td th:text="*{residualValue}"></td>
+                    <td th:text="*{deposit}" class="text-center"></td>
+                    <td th:text="*{term}" class="text-center"></td>
+                    <td th:text="*{residualValue}" class="text-center"></td>
                     <td th:text="*{#temporals.format(requestDate, 'dd-MM-yyyy HH:mm')}"></td>
                     <td th:text="*{status}"></td>
                     <th:block sec:authorize="!hasRole('ROLE_MODERATOR')">
-                    <td th:if="${offer.status == 'PRESENTED' or offer.status == 'REVISED'}"><a class="btn btn-light" th:href="@{/offers/view/{id}(id=${offer.id})}">View offer</a></td>
-                    <td th:if="${offer.status == 'PRESENTED' or offer.status == 'REVISED'}"><a class="btn btn-light" th:href="@{/seller/add/{id}(id=${offer.id})}">Apply for leasing</a></td>
+                    <td th:if="${offer.status != 'REQUESTED' and offer.status != 'DECLINED'}"><a class="btn btn-outline-dark" th:href="@{/offers/view/{id}(id=${offer.id})}">View offer</a></td>
+                    <td th:if="${offer.status == 'PRESENTED' or offer.status == 'REVISED'}"><a class="btn btn-outline-dark" th:href="@{/seller/add/{id}(id=${offer.id})}">Apply for leasing</a></td>
                     </th:block>
                     <th:block sec:authorize="hasRole('ROLE_MODERATOR')">
                     <td><a th:href="@{/offers/edit/{id}(id=${offer.id})}" class="btn btn-outline-dark">Review</a></td>
                     <td th:if="${offer.status != 'APPLIED'}">
-<!--                        <a th:href="@{/offers/delete/{id}(id=${offer.id})}" class="btn btn-outline-dark">Delete</a>-->
+
                         <form th:action="@{/offers/delete}" th:method="delete">
                             <div class="button-holder d-flex justify-content-center">
                                 <input type="hidden" name="id" th:value="*{id}">
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-outline-dark">Delete</button>
                             </div>
                         </form>
                     </td>
@@ -86,5 +89,8 @@
 
     </div>
 </main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
 </body>
 </html>

@@ -158,10 +158,15 @@ public class OfferController extends BaseController{
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     public ModelAndView reviewOfferConfirm(@PathVariable("id")String id,
-                                           @ModelAttribute OfferReviewBindingModel offerReviewBindingModel){
-        String carId = this.offerService.findOfferById(id).getCar().getId();
-        this.offerService.reviewOffer(id, this.modelMapper.map(offerReviewBindingModel, OfferServiceModel.class));
-        return super.redirect("/offers/"+carId);
+                                           @Valid @ModelAttribute OfferReviewBindingModel bindingModel,
+                                           BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return super.redirect("/offers/edit/" + id);
+        } else {
+            String carId = this.offerService.findOfferById(id).getCar().getId();
+            this.offerService.reviewOffer(id, this.modelMapper.map(bindingModel, OfferServiceModel.class));
+            return super.redirect("/offers/" + carId);
+        }
     }
 
     @PostMapping("/delete")

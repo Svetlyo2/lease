@@ -4,15 +4,15 @@
     <head>
         <th:block th:include = "~{fragments/head}"></th:block>
     </head>
-<body>
-<div class="container-fluid">
+<body class="bgr bg-home">
+<!--<div class="container-fluid p-0">-->
     <header>
         <th:block th:include = "~{fragments/navbar}"></th:block>
     </header>
     <main class="mt-3">
-        <h3>welcome home <span sec:authentication="name"></span></h3>
-        <div sec:authorize="hasRole('ROLE_MODERATOR')">
-             <p class="text-center">
+<!--        <h3>welcome home <span sec:authentication="name"></span></h3>-->
+        <div sec:authorize="hasRole('ROLE_MODERATOR')" class="border bg-danger w-25 mx-auto">
+             <p class="text-center pt-3">
                  <span  th:if="${newRequests > 0}">
                      <span th:if="${newRequests == 1}" th:text="|1 new request for offer is waiting for reply|"></span>
                      <span th:if="${newRequests > 1}" th:text="|${newRequests} new requests for offers are waiting for reply|"></span>
@@ -20,7 +20,47 @@
                  <span  th:unless="${newRequests > 0}" th:text="|All request for offers have been answered|"></span>
              </p>
         </div>
+
+            <div class="container-fluid d-flex flex-column mx-auto border mt-process text-white bg-grey w-75">
+                <h3 class="text-center">4 Easy Steps To Your New Car</h3>
+                <div class="process d-flex pb-2">
+                    <div class="step border">
+                        <h5 class="text-center pt-2">Find Your Car</h5>
+                        <p class="px-1">
+                            Buying a car is one of the biggest purchases you’ll make. Take your time to decide which car would be right for you
+                        </p>
+                    </div>
+                    <div class="step border">
+                        <h5 class="text-center pt-2">Select a payment plan</h5>
+                        <p class="px-1">
+                            Request several offers to work out how much you will spend buying the car.
+                        </p>
+                    </div>
+                    <div class="step border">
+                        <h5 class="text-center pt-2">Apply For Leasing</h5>
+                        <p class="px-1">
+                            Complete a leasing application,
+                            once approved one of the DL team will contact you to confirm the order.
+                        </p></div>
+                    <div class="step border">
+                        <h5 class="text-center pt-2">Delivery</h5>
+                        <p class="px-1">
+                            Sit back and relax. The DL team will arrange registration and insurances of your vehicle.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        <div class="text-white d-flex justify-content-md-around">
+        <a class="btn btn-outline-light mt-2 px-3" th:href="@{/profile/add}">Add profile</a>
+        <a class="btn btn-outline-light mt-2 px-3" th:href="@{/car/my-cars}">My cars</a>
+        </div>
+
+
+
     </main>
-</div>
+<!--</div>-->
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
 </body>
 </html>

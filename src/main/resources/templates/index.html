@@ -1,16 +1,29 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <th:block th:include = "~{fragments/head}"></th:block>
+    <th:block th:include="~{fragments/head}"></th:block>
 </head>
-<body>
+<body class="bgr bg-index">
 <header>
-<th:block th:include = "~{fragments/navbar}"></th:block>
+    <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
-
-<h1>test index</h1>
-
+<main>
+    <div class="container-fluid d-flex flex-column align-items-md-center">
+        <h1>Welcome To Dream Leasing</h1>
+        <hr class="my-2"/>
+        <p class="h4">If you already have a dream car in mind, then you&#39re in the right place.</p>
+        <p class="h4">We&#39re pleased to be able to offer you the perfect personal lease.</p>
+        <hr class="my-5"/>
+        <h4 class="mt-index"><a th:href="@{/users/login}"><span class="text-org">Login</span></a> if you have an account
+            or
+            <a th:href="@{/users/register}">
+                <span class="text-org">Register</span></a> now and catch your dream.
+        </h4>
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
 </body>
 </html>

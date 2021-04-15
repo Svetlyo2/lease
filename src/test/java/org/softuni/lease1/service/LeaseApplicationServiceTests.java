@@ -7,9 +7,7 @@ import org.junit.runner.RunWith;
 import org.modelmapper.ModelMapper;
 import org.softuni.lease1.domain.entity.*;
 import org.softuni.lease1.domain.model.service.LeaseApplicationServiceModel;
-import org.softuni.lease1.domain.model.service.OfferServiceModel;
 import org.softuni.lease1.error.ApplicationNotFoundException;
-import org.softuni.lease1.error.OfferNotFoundException;
 import org.softuni.lease1.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
@@ -19,9 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

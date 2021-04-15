@@ -3,15 +3,15 @@
 <head>
     <th:block th:include="~{fragments/head}"></th:block>
 </head>
-<body>
+<body class="grad2">
 <header>
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
-    <main>
+    <main class="d-flex flex-column justify-content-center w-50 mx-auto">
         <div class="container-fluid w-75 m-auto">
-        <h3>Your profile details</h3>
+        <h3 class="text-center my-4">Your profile details</h3>
         <form th:object="${bindingModel}" th:action="@{/profile/edit}" method="post">
-            <div class="form-row align-items-center">
+            <div class="form-row align-items-center my-4">
                 <th:block
                         th:each="type : ${T(org.softuni.lease1.domain.entity.Type).values()}">
                     <div class="form-check">
@@ -24,12 +24,12 @@
             </div>
 
             <div class="form-row align-items-center mt-3">
-                <div class="form-group col-md-6" th:classappend="${#fields.hasErrors('fullName')}? 'text-danger'">
+                <div class="form-group col-md-8" th:classappend="${#fields.hasErrors('fullName')}? 'text-danger'">
                     <label for="inputFullName">Full name</label>
                     <input type="text" th:field="*{fullName}" class="form-control" name="fullName" id="inputFullName" placeholder="e.g. John Smith">
                     <small th:each="error : ${#fields.errors('fullName')}" th:text="${error}"></small>
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label for="inputUic">UIC</label>
                     <input type="text" th:field="*{UIC}" class="form-control" id="inputUic"
                            placeholder="Enter your Unique Identification Code">
@@ -47,20 +47,22 @@
                     <input type="text" th:field="*{address}" name="address" class="form-control" id="inputAddress" placeholder="Enter your address">
                     <small th:each="error : ${#fields.errors('address')}" th:text="${error}" class="error text-muted"></small>
                 </div>
-            </div>
-            <div class="form-row align-items-center">
                 <div class="form-group col-md-3">
                     <label for="inputMobile">Mobile number</label>
                     <input type="text" th:field="*{mobile}" name="mobile" class="form-control" id="inputMobile" placeholder="Enter your mobile number">
                     <small th:each="error : ${#fields.errors('mobile')}" th:text="${error}" class="error text-muted"></small>
                 </div>
             </div>
+            <div class="d-flex justify-content-md-around my-4">
                         <button class="btn btn-primary">Save changes</button>
             <a th:href="@{/profile/show}" class="btn btn-primary ml-3">Back to profile</a>
-
+            </div>
         </form>
         </div>
 
     </main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
 </body>
 </html>

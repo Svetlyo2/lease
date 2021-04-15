@@ -131,6 +131,8 @@ public class OfferServiceImpl implements OfferService {
         int count = this.countOverdueRequest();
         if (count > 0){
         System.out.println(this.countOverdueRequest() + " overdue requests");
+        //TODO
+
         }
     }
 }

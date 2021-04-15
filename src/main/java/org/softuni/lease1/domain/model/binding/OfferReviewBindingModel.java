@@ -1,8 +1,8 @@
 package org.softuni.lease1.domain.model.binding;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import org.softuni.lease1.common.Constants;
+
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 public class OfferReviewBindingModel {
@@ -17,7 +17,7 @@ public class OfferReviewBindingModel {
     }
 
     @NotNull(message = "Please fill deposit")
-    @Min(value = 0, message = "Deposit must be at least 0.")
+    @Min(value = 0, message = Constants.NEGATIVE)
     @Max(value = 80, message = "Deposit could not exceed 80%")
     public Integer getDeposit() {
         return deposit;
@@ -39,7 +39,7 @@ public class OfferReviewBindingModel {
     }
 
     @NotNull(message = "Please fill residual value")
-    @Min(value = 0, message = "Residual value must be at least 0.")
+    @Min(value = 0, message = Constants.NEGATIVE)
     @Max(value = 60, message = "Residual value could not exceed 60%")
     public Integer getResidualValue() {
         return residualValue;
@@ -57,6 +57,8 @@ public class OfferReviewBindingModel {
         this.status = status;
     }
 
+    @NotNull
+    @Positive(message = Constants.NEGATIVE)
     public BigDecimal getInterest() {
         return interest;
     }
@@ -65,6 +67,8 @@ public class OfferReviewBindingModel {
         this.interest = interest;
     }
 
+    @NotNull
+    @Positive(message = Constants.NEGATIVE)
     public BigDecimal getFee() {
         return fee;
     }

@@ -3,16 +3,19 @@
 <head>
     <th:block th:include="~{fragments/head}"></th:block>
 </head>
-<body>
+<body class="bg-ap">
 <header>
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main>
     <div class="container-fluid w-75 m-auto">
-        <th:block>
-            <a th:href="@{/car/add}" class="btn btn-outline-dark">Add a car</a>
-        </th:block>
-        <h3>Your cars</h3>
+        <h3 class="text-center my-4">Your cars</h3>
+        <div class="d-flex justify-content-center mt-4 mb-4">
+            <th:block>
+                <a th:href="@{/car/add}" class="btn btn-light btn-outline-dark">Add a car</a>
+            </th:block>
+        </div>
+
         <table class="table">
             <thead>
             <tr>
@@ -21,7 +24,7 @@
                 <th scope="col">Model</th>
                 <th scope="col">Year</th>
                 <th scope="col">Price</th>
-                <th scope="col"></th>
+<!--                <th scope="col"></th>-->
             </tr>
             </thead>
             <tbody>
@@ -40,5 +43,8 @@
     </div>
 
 </main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <th:block th:include="~{fragments/head}"></th:block>
 </head>
-<body>
+<body class="bg-4">
 <header>
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
@@ -12,7 +12,7 @@
     <div class="container w-75">
         <div class="row mb-1">
             <div class="col-sm-6">
-                <div class="card" th:object="${profile}">
+                <div class="card bg-info text-white" th:object="${profile}">
                     <div class="card-body">
                         <h5 class="card-header">Lessee</h5>
                         <div class="d-flex justify-content-between">
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <div class="card">
+                <div class="card bg-info text-white">
                     <div class="card-body" th:object="${car}">
                         <h5 class="card-header">Car</h5>
                         <div class="d-flex justify-content-between">
@@ -44,7 +44,7 @@
         </div>
         <div class="row mb-1">
             <div class="col-sm-6">
-                <div class="card" th:object="${seller}">
+                <div class="card bg-info text-white pb-2" th:object="${seller}">
                     <div class="card-body">
                         <h5 class="card-header">Seller</h5>
                         <div class="d-flex justify-content-between">
@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <div class="card">
+                <div class="card bg-info text-white">
                     <div class="card-body" th:object="${offer}">
                         <h5 class="card-header">Offer conditions</h5>
                         <div class="d-flex justify-content-between">
@@ -69,7 +69,7 @@
                         </div>
                         <div class="d-flex justify-content-between mt-1">
                             <p class="card-text mb-0" th:text="|Interest % *{interest}|"></p>
-                            <a class="btn btn-sm btn-light btn-outline-dark" th:href="@{/offers/edit/{id}(id=*{id})}">Change</a>
+                            <a class="btn btn-outline-dark text-white" th:href="@{/offers/edit/{id}(id=*{id})}">Change</a>
                             <p class="card-text mb-0" th:text="|Fee % *{fee}|"></p>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                     <label for="inputDescription" class="card-header font-weight-bold ml-3">Comments on the
                         decision</label>
                     <div>
-                        <textarea th:field="*{description}" cols="20" rows="6" class="form-control form-control-sm"
+                        <textarea th:field="*{description}" cols="20" rows="6" class="form-control form-control-sm border"
                                   id="inputDescription"></textarea>
                     </div>
                 </div>
@@ -92,18 +92,18 @@
 
                     <label for="inputRequestDate" class="col-sm-6 col-form-label">Request date</label>
                     <input type="text" th:value="${#temporals.format(app.requestDate, 'dd-MM-yyyy')}" name="requestDate"
-                           class="form-control form-control-sm" id="inputRequestDate" disabled>
+                           class="form-control form-control-sm bg-info text-white" id="inputRequestDate" disabled>
 
-                    <label class="col-sm-4 col-form-label" for="OStatus">Application status</label>
-                    <select class="form-control form-control-sm" name="status" id="OStatus"
+                    <label class="col-sm-6 col-form-label" for="OStatus">Application status</label>
+                    <select class="form-control form-control-sm border" name="status" id="OStatus"
                             th:field="*{appStatus}" required>
                         <option value="RECEIVED">Received</option>
                         <option value="WAITING">Waiting</option>
                         <option value="APPROVED">Approved</option>
                         <option value="DECLINED">Declined</option>
                     </select>
-                    <div>
-                        <button type="submit" class="btn btn-primary align-content-center mt-2">Save
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-outline-dark align-content-center mt-2">Save
                         </button>
                     </div>
                 </div>
@@ -111,5 +111,8 @@
         </form>
     </div>
 </main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
 </body>
 </html>

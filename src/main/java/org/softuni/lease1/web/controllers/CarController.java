@@ -6,6 +6,7 @@ import org.softuni.lease1.domain.model.service.CarServiceModel;
 import org.softuni.lease1.domain.model.view.CarListViewModel;
 import org.softuni.lease1.service.CarService;
 import org.softuni.lease1.service.CloudinaryService;
+import org.softuni.lease1.service.UserProfileService;
 import org.softuni.lease1.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,12 +25,14 @@ import java.util.stream.Collectors;
 @RequestMapping("/car")
 public class CarController extends BaseController{
     private final CarService carService;
+    private final UserProfileService userProfileService;
     private final CloudinaryService cloudinaryService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public CarController(CarService carService, CloudinaryService cloudinaryService, ModelMapper modelMapper) {
+    public CarController(CarService carService, UserProfileService userProfileService, CloudinaryService cloudinaryService, ModelMapper modelMapper) {
         this.carService = carService;
+        this.userProfileService = userProfileService;
         this.cloudinaryService = cloudinaryService;
         this.modelMapper = modelMapper;
     }
@@ -39,6 +43,8 @@ public class CarController extends BaseController{
             @ModelAttribute("bindingModel")CarAddBindingModel bindingModel,
             ModelAndView modelAndView){
         modelAndView.addObject("bindingModel", bindingModel);
+        LocalDateTime minYear= LocalDateTime.now().minusYears(9);
+        modelAndView.addObject("minYear", minYear);
         return super.view("car/add-car", modelAndView);
     }
 
@@ -68,6 +74,9 @@ public class CarController extends BaseController{
     public ModelAndView showCars(
             ModelAndView modelAndView,
             Principal principal){
+        if (this.userProfileService.findProfile(principal.getName()) == null){
+            return super.redirect("/profile/add");
+        }
         List<CarListViewModel> carListViewModels = carService.findCarsByUser(principal.getName())
                 .stream()
                 .map(c -> modelMapper.map(c, CarListViewModel.class))

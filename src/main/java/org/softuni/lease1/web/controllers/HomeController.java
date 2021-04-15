@@ -15,6 +15,7 @@ public class HomeController extends BaseController{
         return super.view("index");
     }
 
+
     @GetMapping("/home")
     @PreAuthorize("isAuthenticated()")
     @PageTitle("Home")

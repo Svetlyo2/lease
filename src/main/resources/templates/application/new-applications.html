@@ -3,7 +3,7 @@
 <head>
     <th:block th:include="~{fragments/head}"></th:block>
 </head>
-<body>
+<body class="bg-4">
 <header>
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
@@ -16,10 +16,10 @@
                 <th scope="col">#</th>
                 <th scope="col">Full name</th>
                 <th scope="col">Car</th>
-                <th scope="col">Price</th>
-                <th scope="col">Request Date</th>
-                <th scope="col">Status</th>
-                <th scope="col"></th>
+                <th scope="col" class="text-lg-right">Price</th>
+                <th scope="col" class="text-center">Request Date</th>
+                <th scope="col" class="text-center">Status</th>
+                <th scope="col" class="text-center"></th>
             </tr>
             </thead>
             <tbody>
@@ -28,10 +28,10 @@
                     <td scope="row" th:text="|${iter.index + 1}|"></td>
                     <td th:text="*{fullName}"></td>
                     <td th:text="*{make}"></td>
-                    <td th:text="*{price}"></td>
-                    <td th:text="*{#temporals.format(requestDate, 'dd-MM-yyyy HH:mm')}"></td>
-                    <td th:text="*{appStatus}"></td>
-                    <td><a class="btn btn-light" th:href="@{/applications/edit/{id}(id=*{id})}">Review</a></td>
+                    <td th:text="*{price}" class="text-lg-right"></td>
+                    <td th:text="*{#temporals.format(requestDate, 'dd-MM-yyyy HH:mm')}" class="text-center"></td>
+                    <td th:text="*{appStatus}" class="text-center"></td>
+                    <td><a class="btn btn-outline-dark" th:href="@{/applications/edit/{id}(id=*{id})}">Review</a></td>
                 </tr>
             </th:block>
             </tbody>
@@ -39,5 +39,8 @@
 
     </div>
 </main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
 </body>
 </html>

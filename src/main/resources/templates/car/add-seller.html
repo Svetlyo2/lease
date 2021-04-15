@@ -3,13 +3,16 @@
 <head>
     <th:block th:include="~{fragments/head}"></th:block>
 </head>
-<body>
+<body class="bg-4">
 <header>
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main>
-    <div class="container-fluid w-75 m-auto">
-        <h3 class="text-center">Add seller details and apply for leasing</h3>
+    <div class="container-fluid w-50 m-auto">
+        <h3 class="text-center my-5">Add seller details and apply for leasing</h3>
+        <div class="img-right-0 d-flex justify-content-lg-end">
+            <img src="https://res.cloudinary.com/jdsv/image/upload/v1618520359/ok_kboqhr.png" style="width:50%;">
+        </div>
         <form th:object="${bindingModel}" th:action="@{/seller/add/{id}(id=${id})}" th:method="post">
             <div class="form-row align-items-center">
                 <th:block
@@ -24,33 +27,39 @@
             </div>
 
             <div class="form-row align-items-center mt-3">
-                <div class="form-group col-md-6" th:classappend="${#fields.hasErrors('fullName')}? 'text-danger'">
+                <div class="form-group col-md-8" th:classappend="${#fields.hasErrors('fullName')}? 'text-danger'">
                     <label for="inputFullName">Full name</label>
                     <input type="text" th:field="*{fullName}" class="form-control" name="fullName" id="inputFullName" placeholder="e.g. John Smith" required>
                     <small th:each="error : ${#fields.errors('fullName')}" th:text="${error}"></small>
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label for="inputUic">UIC</label>
                     <input type="text" th:field="*{UIC}" name="UIC" class="form-control" id="inputUic"
-                           placeholder="Unique Identification Code"  required>
+                           placeholder="Unified identification code"  required>
                     <small th:each="error : ${#fields.errors('UIC')}" th:text="${error}"></small>
                 </div>
             </div>
             <div class="form-row align-items-center">
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label for="inputCity">City</label>
                     <input type="text" th:field="*{city}"name="city" class="form-control mr-2" id="inputCity" required>
                     <small th:each="error : ${#fields.errors('city')}" th:text="${error}"></small>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-8">
                     <label for="inputAddress">Address</label>
                     <input type="text" th:field="*{address}" name="address" class="form-control" id="inputAddress" placeholder="Enter your address" required>
                     <small th:each="error : ${#fields.errors('address')}" th:text="${error}"></small>
                 </div>
             </div>
-            <button class="btn btn-primary">Apply</button>
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-outline-dark">Apply</button>
+            </div>
+
         </form>
     </div>
 </main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
 </body>
 </html>

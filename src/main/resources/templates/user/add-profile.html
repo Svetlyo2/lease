@@ -3,14 +3,14 @@
 <head>
     <th:block th:include="~{fragments/head}"></th:block>
 </head>
-<body>
+<body class="grad2">
 <header>
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
-    <main>
-        <div class="container-fluid w-75 m-auto">
-        <h3>Your details</h3>
-        <p>Please complete the form below</p>
+    <main class="d-flex flex-column justify-content-center w-50 mx-auto">
+        <div class="container-fluid">
+        <h3 class="text-center mt-3">You need a profile to get a quote</h3>
+        <p class="text-center">Please complete the form below</p>
         <form th:object="${bindingModel}" th:action="@{/profile/add}" method="post">
             <div class="form-row align-items-center mb-3">
                 <th:block
@@ -24,13 +24,13 @@
                 </th:block>
             </div>
 
-            <div class="form-row align-items-center">
-                <div class="form-group col-md-6" th:classappend="${#fields.hasErrors('fullName')}? 'text-danger'">
+            <div class="form-row align-items-center mt-3">
+                <div class="form-group col-md-8" th:classappend="${#fields.hasErrors('fullName')}? 'text-danger'">
                     <label for="inputFullName">Full name</label>
                     <input type="text" th:field="*{fullName}" class="form-control" name="fullName" id="inputFullName" placeholder="e.g. John Smith" required>
                     <small th:each="error : ${#fields.errors('fullName')}" th:text="${error}" class="error text-muted"></small>
                 </div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label for="inputUic">UIC</label>
                     <input type="text" th:field="*{UIC}" name="UIC" class="form-control" id="inputUic"
                            placeholder="Unique Identification Code" required>
@@ -48,20 +48,23 @@
                     <input type="text" th:field="*{address}" name="address" class="form-control" id="inputAddress" placeholder="Enter your address" required>
                     <small th:each="error : ${#fields.errors('address')}" th:text="${error}" class="error text-muted"></small>
                 </div>
-            </div>
-            <div class="form-row align-items-center">
                 <div class="form-group col-md-3">
                     <label for="inputMobile">Mobile number</label>
-                    <input type="text" th:field="*{mobile}" name="mobile" class="form-control" id="inputMobile" placeholder="Enter your mobile number" required>
+                    <input type="text" th:field="*{mobile}" name="mobile" class="form-control" id="inputMobile" placeholder="Your mobile number" required>
                     <small th:each="error : ${#fields.errors('mobile')}" th:text="${error}" class="error text-muted"></small>
                 </div>
             </div>
+            <div class="d-flex justify-content-center my-4">
             <button class="btn btn-primary">Add profile</button>
+            </div>
         </form>
         </div>
         <h4 class="mt-2 text-center">Why we only show you offers after entering personal data</h4>
         <p class="text-center">Reliable offers are only available after a credit check. For this we need information about yourself and your
             financial situation.</p>
     </main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
 </body>
 </html>

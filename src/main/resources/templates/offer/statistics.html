@@ -5,19 +5,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
 </head>
-<body>
+<body class="bg-3">
 <header>
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main>
     <div class="container-fluid d-flex flex-column align-items-center w-50">
-        <h4 class="mt-4">Last week requests for offers</h4>
+        <h4 class="my-5">Last week requests for offers</h4>
         <div class="chart-container" style="position: relative; height:30vh; width:35vw">
-        <canvas id="myChart" width="200" height="200"></canvas>
+        <canvas id="myChart" class="bg-light" width="300" height="180"></canvas>
         </div>
         <script src="/js/offers.js"></script>
 
     </div>
 </main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
 </body>
 </html>

@@ -3,24 +3,24 @@
 <head>
     <th:block th:include="~{fragments/head}"></th:block>
 </head>
-<body>
+<body class="bg-4">
 <header>
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main>
     <div class="container-fluid d-flex flex-column align-items-center w-75">
-        <h4 class="mt-4">All requested offers</h4>
+        <h4 class="my-4">All requested offers</h4>
         <table class="table">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Car</th>
-                <th scope="col">Price</th>
+                <th scope="col" class="text-center">Car</th>
+                <th scope="col" class="text-center">Price</th>
                 <th scope="col">Deposit %</th>
                 <th scope="col">Term (months)</th>
                 <th scope="col">Residual value %</th>
                 <th scope="col">Request Date</th>
-                <th scope="col">Status</th>
+                <th scope="col" class="text-center">Status</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
@@ -31,12 +31,12 @@
                     <td scope="row" th:text="|${iter.index + 1}|"></td>
                     <td th:text="*{make}"></td>
                     <td th:text="*{price}"></td>
-                    <td th:text="*{deposit}"></td>
-                    <td th:text="*{term}"></td>
-                    <td th:text="*{residualValue}"></td>
+                    <td th:text="*{deposit}" class="text-center"></td>
+                    <td th:text="*{term}" class="text-center"></td>
+                    <td th:text="*{residualValue}" class="text-center"></td>
                     <td th:text="*{#temporals.format(requestDate, 'dd-MM-yyyy HH:mm')}"></td>
                     <td th:text="*{status}"></td>
-                    <td><a class="btn btn-light" th:href="@{/offers/{id}(id=*{carId})}">Reply</a></td>
+                    <td><a class="btn btn-outline-dark" th:href="@{/offers/{id}(id=*{carId})}">Reply</a></td>
                 </tr>
             </th:block>
             </tbody>
@@ -44,5 +44,8 @@
 
     </div>
 </main>
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
 </body>
 </html>

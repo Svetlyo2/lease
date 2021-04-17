@@ -19,8 +19,10 @@
                  </span>
                  <span  th:unless="${newRequests > 0}" th:text="|All request for offers have been answered|"></span>
              </p>
+<!--            <p class="text-center pt-3">-->
+<!--                <span th:if="${#session.getAttribute('overdue') > 0}" th:text="|${#session.getAttribute('overdue')} requests are overdue|"></span>-->
+<!--            </p>-->
         </div>
-
             <div class="container-fluid d-flex flex-column mx-auto border mt-process text-white bg-grey w-75">
                 <h3 class="text-center">4 Easy Steps To Your New Car</h3>
                 <div class="process d-flex pb-2">

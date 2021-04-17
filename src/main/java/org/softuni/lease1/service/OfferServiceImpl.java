@@ -9,6 +9,7 @@ import org.softuni.lease1.repository.OfferRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -131,8 +132,7 @@ public class OfferServiceImpl implements OfferService {
         int count = this.countOverdueRequest();
         if (count > 0){
         System.out.println(this.countOverdueRequest() + " overdue requests");
-        //TODO
-
         }
+//        session.setAttribute("overdue", count);
     }
 }

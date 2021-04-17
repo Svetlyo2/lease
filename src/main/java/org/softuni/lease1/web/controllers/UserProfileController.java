@@ -36,7 +36,12 @@ public class UserProfileController extends BaseController {
     @PageTitle("Add profile")
     public ModelAndView add(
             @ModelAttribute(name = "bindingModel") ProfileAddBindingModel bindingModel,
-            ModelAndView modelAndView) {
+            ModelAndView modelAndView,
+            Principal principal) {
+        ProfileServiceModel profileServiceModel = this.userProfileService.findProfile(principal.getName());
+        if (profileServiceModel != null){
+            return super.redirect("/profile/show");
+        }
         modelAndView.addObject("bindingModel", bindingModel);
         return super.view("user/add-profile", modelAndView);
     }

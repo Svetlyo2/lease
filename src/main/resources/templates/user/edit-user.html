@@ -28,7 +28,7 @@
                         <input type="email" th:value="*{email}" name="email" class="form-control" id="inputEmail"
                                placeholder="Enter email">
                         <th:block th:if="${#fields.hasErrors('email')}">
-                            <small class="error text-muted" th:errors="*{email}"></small>
+                            <small th:errors="*{email}" class="error text-danger"></small>
                         </th:block>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                                id="oldPassword"
                                placeholder="Enter Password">
                         <th:block th:if="${#fields.hasErrors('oldPassword')}">
-                            <small class="error text-muted" th:errors="*{oldPassword}"></small>
+                            <small class="error text-danger" th:errors="*{oldPassword}"></small>
                         </th:block>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                                id="newPassword"
                                placeholder="Enter new password">
                         <th:block th:if="${#fields.hasErrors('password')}">
-                            <small class="error text-muted" th:errors="*{password}"></small>
+                            <small class="error text-danger" th:errors="*{password}"></small>
                         </th:block>
                     </div>
                 </div>

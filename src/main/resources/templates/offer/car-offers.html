@@ -68,7 +68,7 @@
                     <td><a th:href="@{/offers/edit/{id}(id=${offer.id})}" class="btn btn-outline-dark">Review</a></td>
                     <td th:if="${offer.status != 'APPLIED'}">
 
-                        <form th:action="@{/offers/delete}" th:method="delete">
+                        <form th:if="${offer.status != 'APPLIED'}" th:action="@{/offers/delete}" th:method="delete">
                             <div class="button-holder d-flex justify-content-center">
                                 <input type="hidden" name="id" th:value="*{id}">
                                 <button type="submit" class="btn btn-danger btn-outline-dark">Delete</button>

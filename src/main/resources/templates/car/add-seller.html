@@ -21,7 +21,7 @@
                         <input class="form-check-input" type="radio" name="inputType"
                                th:value="${type}" th:text="${type}" th:field="*{type}" required>
                         <label class="form-check-label" th:for="${#ids.prev('type')}"></label>
-                        <small th:each="error : ${#fields.errors('type')}" th:text="${error}" class="error text-muted"></small>
+                        <small th:each="error : ${#fields.errors('type')}" th:text="${error}" class="error text-danger"></small>
                     </div>
                 </th:block>
             </div>
@@ -30,25 +30,25 @@
                 <div class="form-group col-md-8" th:classappend="${#fields.hasErrors('fullName')}? 'text-danger'">
                     <label for="inputFullName">Full name</label>
                     <input type="text" th:field="*{fullName}" class="form-control" name="fullName" id="inputFullName" placeholder="e.g. John Smith" required>
-                    <small th:each="error : ${#fields.errors('fullName')}" th:text="${error}"></small>
+                    <small th:each="error : ${#fields.errors('fullName')}" th:text="${error}"  class="error text-danger"></small>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputUic">UIC</label>
                     <input type="text" th:field="*{UIC}" name="UIC" class="form-control" id="inputUic"
                            placeholder="Unified identification code"  required>
-                    <small th:each="error : ${#fields.errors('UIC')}" th:text="${error}"></small>
+                    <small th:each="error : ${#fields.errors('UIC')}" th:text="${error}"  class="error text-danger"></small>
                 </div>
             </div>
             <div class="form-row align-items-center">
                 <div class="form-group col-md-4">
                     <label for="inputCity">City</label>
                     <input type="text" th:field="*{city}"name="city" class="form-control mr-2" id="inputCity" required>
-                    <small th:each="error : ${#fields.errors('city')}" th:text="${error}"></small>
+                    <small th:each="error : ${#fields.errors('city')}" th:text="${error}"  class="error text-danger"></small>
                 </div>
                 <div class="form-group col-md-8">
                     <label for="inputAddress">Address</label>
-                    <input type="text" th:field="*{address}" name="address" class="form-control" id="inputAddress" placeholder="Enter your address" required>
-                    <small th:each="error : ${#fields.errors('address')}" th:text="${error}"></small>
+                    <input type="text" th:field="*{address}" name="address" class="form-control" id="inputAddress" required>
+                    <small th:each="error : ${#fields.errors('address')}" th:text="${error}" class="error text-danger"></small>
                 </div>
             </div>
             <div class="d-flex justify-content-center">

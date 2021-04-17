@@ -19,7 +19,7 @@
             <input type="text" th:value="*{username}" name="username" class="form-control" id="inputUsername"
                    placeholder="Enter username" required>
             <th:block th:if="${#fields.hasErrors('username')}">
-                <small class="error text-muted" th:errors="*{username}"></small>
+                <small class="error text-danger" th:errors="*{username}"></small>
             </th:block>
         </div>
         <div class="form-group">
@@ -27,7 +27,7 @@
             <input type="email" th:value="*{email}" name="email" class="form-control" id="inputEmail"
                    placeholder="Enter email" required>
             <th:block th:if="${#fields.hasErrors('email')}">
-                <small class="error text-muted" th:errors="*{email}"></small>
+                <small class="error text-danger" th:errors="*{email}"></small>
             </th:block>
         </div>
         <div class="form-group">
@@ -35,7 +35,7 @@
             <input type="password" th:value="*{password}" name="password" class="form-control" id="inputPassword"
                    placeholder="Enter Password" required>
             <th:block th:if="${#fields.hasErrors('password')}">
-                <small class="error text-muted" th:errors="*{password}"></small>
+                <small class="error text-danger" th:errors="*{password}"></small>
             </th:block>
         </div>
         <div class="form-group">
@@ -43,7 +43,7 @@
             <input type="password" th:value="*{confirmPassword}" name="confirmPassword" class="form-control"
                    id="inputConfirmPassword" placeholder="Repeat Password" required>
             <th:block th:if="${#fields.hasErrors('confirmPassword')}">
-                <small class="error text-muted" th:errors="*{confirmPassword}"></small>
+                <small class="error text-danger" th:errors="*{confirmPassword}"></small>
             </th:block>
         </div>
         <div class="d-flex justify-content-center">

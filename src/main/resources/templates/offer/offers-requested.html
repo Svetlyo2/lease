@@ -10,6 +10,9 @@
 <main>
     <div class="container-fluid d-flex flex-column align-items-center w-75">
         <h4 class="my-4">All requested offers</h4>
+        <th:block th:if="${delayMessage != '' and overdueCount > 0}">
+            <div id="req-reminder" class="text-center border bg-danger py-2 px-2 border-dark" th:text="${delayMessage}"></div>
+        </th:block>
         <table class="table">
             <thead>
             <tr>
@@ -41,7 +44,12 @@
             </th:block>
             </tbody>
         </table>
-
+<!--        <script th:if="${delayMessage != ''}" th:inline="javascript">-->
+<!--            var msg = [[${delayMessage}]];-->
+<!--            if (msg != ''){-->
+<!--                alert(msg);-->
+<!--            }-->
+<!--        </script>-->
     </div>
 </main>
 <footer>

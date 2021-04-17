@@ -53,6 +53,7 @@ public class OfferServiceImpl implements OfferService {
         return this.offerRepository.findAll()
                 .stream()
                 .map(offer -> this.modelMapper.map(offer, OfferServiceModel.class))
+                .sorted((o1, o2) -> o2.getRequestDate().compareTo(o1.getRequestDate()))
                 .collect(Collectors.toList());
     }
 
@@ -61,6 +62,7 @@ public class OfferServiceImpl implements OfferService {
         List<OfferServiceModel> offers = this.offerRepository.findAllByStatusIsContaining("REQUESTED")
                 .stream()
                 .map(offer -> this.modelMapper.map(offer, OfferServiceModel.class))
+                .sorted((o1, o2) -> o2.getRequestDate().compareTo(o1.getRequestDate()))
                 .collect(Collectors.toList());
         return offers;
     }
@@ -125,14 +127,5 @@ public class OfferServiceImpl implements OfferService {
         Offer offer = this.offerRepository.findById(id)
                 .orElseThrow(()-> new OfferNotFoundException("Offer with this id was not found!"));
         this.offerRepository.delete(offer);
-    }
-
-    @Scheduled(fixedRate = 300000)
-    private void generateReminder(){
-        int count = this.countOverdueRequest();
-        if (count > 0){
-        System.out.println(this.countOverdueRequest() + " overdue requests");
-        }
-//        session.setAttribute("overdue", count);
     }
 }

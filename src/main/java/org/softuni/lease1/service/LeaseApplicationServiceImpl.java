@@ -63,6 +63,7 @@ public class LeaseApplicationServiceImpl implements LeaseApplicationService {
                 .findAllByAppStatus(AppStatus.RECEIVED)
                 .stream()
                 .map(a->this.modelMapper.map(a, LeaseApplicationServiceModel.class))
+                .sorted((a1, a2) -> a2.getRequestDate().compareTo(a1.getRequestDate()))
                 .collect(Collectors.toList());
         return applications;
     }

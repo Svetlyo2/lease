@@ -80,14 +80,14 @@
         <form th:object="${app}" th:action="@{/applications/edit/{id}(id=${id})}" th:method="post">
             <div class="row">
                 <div class="col-md-6 form-group">
-                    <label for="inputDescription" class="card-header font-weight-bold ml-3">Comments on the
+                    <label for="inputDescription" class="card-header font-weight-bold pt-0 ml-3">Comments on the
                         decision</label>
                     <div>
                         <textarea th:field="*{description}" cols="20" rows="6" class="form-control form-control-sm border"
                                   id="inputDescription"></textarea>
                     </div>
                 </div>
-                <div class="col-md-6 form-group mt-4">
+                <div class="col-md-6 form-group mt-1">
 <!--                    <p class="card-text mt-4 mb-1 ml-3" th:text="|Request date: ${#temporals.format(app.requestDate, 'dd-MM-yyyy')}|"></p>-->
 
                     <label for="inputRequestDate" class="col-sm-6 col-form-label">Request date</label>

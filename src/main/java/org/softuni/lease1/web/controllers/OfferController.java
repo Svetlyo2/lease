@@ -12,6 +12,7 @@ import org.softuni.lease1.domain.model.view.OfferRequestViewModel;
 import org.softuni.lease1.domain.model.view.OffersAllViewModel;
 import org.softuni.lease1.domain.model.view.ProfileViewModel;
 import org.softuni.lease1.service.CarService;
+import org.softuni.lease1.service.NotificationService;
 import org.softuni.lease1.service.OfferService;
 import org.softuni.lease1.service.UserProfileService;
 import org.softuni.lease1.web.annotations.PageTitle;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,14 +35,16 @@ import java.util.stream.Collectors;
 public class OfferController extends BaseController{
     private final CarService carService;
     private final OfferService offerService;
+    private final NotificationService notificationService;
     private final UserProfileService userProfileService;
     private final ModelMapper modelMapper;
 
 
     @Autowired
-    public OfferController(CarService carService, OfferService offerService, UserProfileService userProfileService, ModelMapper modelMapper) {
+    public OfferController(CarService carService, OfferService offerService, NotificationService notificationService, UserProfileService userProfileService, ModelMapper modelMapper) {
         this.carService = carService;
         this.offerService = offerService;
+        this.notificationService = notificationService;
         this.userProfileService = userProfileService;
         this.modelMapper = modelMapper;
     }
@@ -94,9 +96,10 @@ public class OfferController extends BaseController{
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PageTitle("Offer requests")
     public ModelAndView allRequests(ModelAndView modelAndView) {
+        String delayMessage = this.notificationService.findNotificationByType("overdueRequests").getMessage();
         List<OfferRequestViewModel> requests = this.offerService.findAllRequestedOffers()
                 .stream()
-                .map(r->{
+                .map(r -> {
                     OfferRequestViewModel request = this.modelMapper.map(r, OfferRequestViewModel.class);
                     request.setMake(r.getCar().getMake());
                     request.setPrice(r.getCar().getPrice());
@@ -105,6 +108,9 @@ public class OfferController extends BaseController{
                 })
                 .collect(Collectors.toList());
         modelAndView.addObject("offers", requests);
+        modelAndView.addObject("delayMessage", delayMessage);
+        Integer overdueCount = this.offerService.countOverdueRequest();
+        modelAndView.addObject("overdueCount", overdueCount);
         return super.view("offer/offers-requested", modelAndView);
     }
     @GetMapping("/all")

@@ -5,7 +5,6 @@
         <th:block th:include = "~{fragments/head}"></th:block>
     </head>
 <body class="bgr bg-home">
-<!--<div class="container-fluid p-0">-->
     <header>
         <th:block th:include = "~{fragments/navbar}"></th:block>
     </header>
@@ -16,12 +15,8 @@
                  <span  th:if="${newRequests > 0}">
                      <span th:if="${newRequests == 1}" th:text="|1 new request for offer is waiting for reply|"></span>
                      <span th:if="${newRequests > 1}" th:text="|${newRequests} new requests for offers are waiting for reply|"></span>
-                 </span>
                  <span  th:unless="${newRequests > 0}" th:text="|All request for offers have been answered|"></span>
              </p>
-<!--            <p class="text-center pt-3">-->
-<!--                <span th:if="${#session.getAttribute('overdue') > 0}" th:text="|${#session.getAttribute('overdue')} requests are overdue|"></span>-->
-<!--            </p>-->
         </div>
             <div class="container-fluid d-flex flex-column mx-auto border mt-process text-white bg-grey w-75">
                 <h3 class="text-center">4 Easy Steps To Your New Car</h3>
@@ -56,11 +51,7 @@
         <a class="btn btn-outline-light mt-2 px-3" th:href="@{/profile/add}">Add profile</a>
         <a class="btn btn-outline-light mt-2 px-3" th:href="@{/car/my-cars}">My cars</a>
         </div>
-
-
-
     </main>
-<!--</div>-->
 <footer>
     <th:block th:include="~{fragments/footer}"></th:block>
 </footer>
